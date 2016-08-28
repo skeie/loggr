@@ -1,0 +1,30 @@
+{
+  "name": "loggr",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start"
+  },
+  "dependencies": {
+    "react": "15.2.1",
+    "react-native": "^0.30.0",
+    "immutable": "^3.8.1",
+    "immutable-devtools": "0.0.7",
+    "react-native-tab-view": "0.0.18",
+    "react-redux": "^4.4.5",
+    "redux": "^3.5.1",
+    "redux-storage": "^4.0.0",
+    "redux-storage-decorator-immutablejs": "^1.0.0",
+    "redux-storage-engine-reactnativeasyncstorage": "^1.0.0",
+    "redux-thunk": "^2.0.1"
+  },
+  "devDependencies": {
+    "eslint-config-airbnb": "^10.0.0",
+    "eslint-plugin-react": "^6.0.0",
+    "eslint": "^2.8.0",
+    "eslint-config-airbnb": "^7.0.0",
+    "eslint-plugin-import": "^1.5.0",
+    "eslint-plugin-jsx-a11y": "^0.6.2",
+    "babel-eslint": "^6.0.0-beta.6"
+  }
+}
