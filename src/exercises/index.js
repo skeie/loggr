@@ -7,10 +7,12 @@ import {
     Image,
     TouchableHighlight,
 } from 'react-native';
-import { addExercise,
+import {
+    addExercise,
     addSet,
     onMetaDataChange,
-    onDelete
+    onDelete,
+    getAll
 } from './actions';
 import Element from './element';
 import { connect } from 'react-redux';
@@ -18,11 +20,12 @@ import Modal from '../components/modal';
 const styles = StyleSheet.create({
     listContainer: {
         flex: 9,
-        backgroundColor: '#FF7286'
+        paddingTop: 30
     },
     headerContainer: {
         flexDirection: 'row',
-        flex: 1
+        flex: 1,
+        margin: 5    
     },
     textInput: {
         flex: 1,
@@ -40,6 +43,7 @@ class ListViewWrapper extends Component {
             exercises: this.ds.cloneWithRows(this.props.exercises.get('exercises').toArray()),
             text: '',
         }
+        props.dispatch(getAll());
     }
 
     static propTypes = {
@@ -54,7 +58,7 @@ class ListViewWrapper extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if(nextProps.exercises !== this.props.exercises) {
+        if (nextProps.exercises !== this.props.exercises) {
             this.setState({
                 exercises: this.ds.cloneWithRows(nextProps.exercises.get('exercises').toArray())
             });
@@ -62,7 +66,7 @@ class ListViewWrapper extends Component {
             const regex = new RegExp(nextProps.search.get('searchString'), 'i');
             const filtered = nextProps.exercises.get('exercises').filter(exercise => (
                 exercise.get('name').search(regex) > -1
-                )
+            )
             );
             this.setState({
                 exercises: this.ds.cloneWithRows(filtered.toArray())
@@ -74,46 +78,37 @@ class ListViewWrapper extends Component {
         this.props.dispatch(addSet(setIndex, kg, index));
     }
 
-    renderHeader = () => (
-        <View style={styles.headerContainer}>
-        <TextInput
-            style={styles.textInput}
-            onChangeText={(text) => this.setState({text})}
-            value={this.state.text}
-        />
-        <TouchableHighlight onPress={this.onAddPress}>
-            <Image source={require('./imgs/plus.png')}/>
-        </TouchableHighlight>
-        </View>
-    )
-
     onMetaDataChange = (metaData, index) => {
         this.props.dispatch(onMetaDataChange(metaData, index))
     }
 
-    onDelete = (index) => {
-        this.props.dispatch(onDelete(index))
+    onDelete = (index, id) => {
+        this.props.dispatch(onDelete(index, id))
     }
 
-    renderRow = (element, sec, i) => <Element element={element} index={i} onMetaDataChange={this.onMetaDataChange} onSetChange={this.onSetChange} onDelete={this.onDelete}/>
+    renderRow = (element, sec, i) => <Element
+        element={element}
+        index={i}
+        onMetaDataChange={this.onMetaDataChange}
+        onSetChange={this.onSetChange}
+        onDelete={this.onDelete}/>
 
-    render () {
+    render() {
         return (
             <View style={styles.listContainer}>
-            <ListView
-              renderHeader={this.renderHeader}
-              style={styles.listContainer}
-              dataSource={this.state.exercises}
-              renderRow={this.renderRow}
-              initialListSize={25}
-              enableEmptySections
-            />
+                <ListView
+                    style={styles.listContainer}
+                    dataSource={this.state.exercises}
+                    renderRow={this.renderRow}
+                    initialListSize={25}
+                    enableEmptySections
+                    />
             </View>
         );
     }
 }
 
 export default connect(state => ({
-  exercises: state.exercises,
-  search: state.search
+    exercises: state.exercises,
+    search: state.search
 }))(ListViewWrapper);

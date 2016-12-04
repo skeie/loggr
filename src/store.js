@@ -5,7 +5,9 @@ import rootReducer from './reducers';
 import immutablejs from 'redux-storage-decorator-immutablejs';
 import createEngine from 'redux-storage-engine-reactnativeasyncstorage';
 import * as storage from 'redux-storage';
-import {ADD_EXERCISE} from './exercises/actionTypes';
+import {ADD_EXERCISE_SUCCESS} from './exercises/actionTypes';
+import injectDependencies from './utils/injectDependencies';
+
 const reducer = storage.reducer(rootReducer);
 let engine = createEngine('td-call-call-super-secret-key');
 engine = immutablejs(engine, ['exercises']);
@@ -14,7 +16,7 @@ const offlineStorage = storage.createMiddleware(engine,
   [
   ],
   [
-      ADD_EXERCISE
+      ADD_EXERCISE_SUCCESS
   ]
 );
 
@@ -23,12 +25,14 @@ let middlewares;
 
 if (__DEV__) {
   middlewares = [
+    injectDependencies(),
     thunk,
     offlineStorage,
     logger,
   ];
 } else {
   middlewares = [
+    injectDependencies(),
     thunk,
     offlineStorage,
   ];

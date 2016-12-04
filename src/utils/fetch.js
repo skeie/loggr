@@ -1,0 +1,116 @@
+// import queryString from 'query-string';
+const baseURl = 'http://192.168.100.8:3000';
+let authorization = '';
+
+function _appUrl(url) {
+  return baseURl + url;
+}
+
+export function setAuthorizationToken(token) {
+  authorization = token;
+}
+
+function setHeaders(method, body, optHeader) {
+  const headers = Object.assign({
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+  }, optHeader);
+
+  if (authorization) {
+    headers.authorization = `Bearer ${authorization}`;
+  }
+
+  return {
+    method,
+    headers,
+    body
+  };
+}
+
+export async function get(url, obj = {}) {
+  let constructedUrl = url;
+  console.log('sapdap 1337', _appUrl(url));
+  
+  //   if (obj.params) {
+  //     constructedUrl += `?${queryString.stringify(obj.params)}`;
+  //   }
+
+  const response = await fetch(_appUrl(url), setHeaders('GET'));
+  console.log('sapdap 1337', response.status);
+  
+  if (response.status === 201) return;
+
+  const responseJson = await response.json();
+  console.log('sapdap 1337', responseJson);
+  
+
+  if (response.status >= 400) {
+    const msg = responseJson.msg || responseJson.message;
+    throw {
+      message: msg
+    };
+  }
+
+  return responseJson;
+}
+
+export async function post(url, obj) {
+  console.log('sap url', _appUrl(url));
+
+  const response = await fetch(_appUrl(url), setHeaders('POST', JSON.stringify(obj)));
+
+  if (response.status === 201) return;
+
+  const responseJson = await response.json();
+
+  if (response.status >= 400) {
+    const msg = responseJson.msg || responseJson.message;
+    throw {
+      message: msg
+    };
+  }
+
+  return responseJson;
+}
+
+export async function del (url, obj) {    
+  const response = await fetch(_appUrl(url), setHeaders('DELETE', JSON.stringify(obj)));
+
+  if (response.status === 201) return;
+
+  const responseJson = await response.json();
+
+  if (response.status >= 400) {
+    const msg = responseJson.msg || responseJson.message;
+    throw {
+      message: msg
+    };
+  }
+
+  return responseJson;
+}
+
+
+export async function postMultiPart(url, obj) {
+  const data = new FormData();
+
+  for (const key in obj) {
+    data.append(key, JSON.stringify(obj[key]));
+  }
+
+  const response = await fetch(_appUrl(url),
+    setHeaders('POST', data, { 'Content-Type': 'multipart/form-data' }));
+
+  if (response.status === 201) return;
+
+  const responseJson = await response.json();
+  if (response.stats >= 400) {
+    const msg = responseJson.msg || responseJson.message;
+    throw {
+      message: msg
+    };
+  }
+
+  return responseJson;
+}
+0

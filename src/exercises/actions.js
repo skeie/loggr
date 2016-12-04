@@ -1,32 +1,62 @@
-import { ADD_EXERCISE, ADD_SET, DELETE_SET, METADATA_CHANGE } from './actionTypes';
+import * as types from './actionTypes';
+import {post, get, del} from '../utils/fetch';
 
-export const addExercise = (name) => (
+export const getAll = () => (
     {
-        type: ADD_EXERCISE,
-        name
+        type: [
+            types.GET_EXERCISE,
+            types.GET_EXERCISE_SUCCESS,
+            types.GET_EXERCISE_FAIL
+        ],
+        promise: () => get('/exercises'),
+    }
+)
+
+export const addExercise = (name) => {
+    const exercise = { exercise: { name, body: '' } };
+    return {
+        type: [
+            types.ADD_EXERCISE,
+            types.ADD_EXERCISE_SUCCESS,
+            types.ADD_EXERCISE_FAIL
+        ],
+        promise: () => post('/exercises/1', exercise),
+        ...exercise
+    }
+};
+
+export const addSet = (setIndex, amount, index) => (
+    {
+        type: [
+            types.ADD_SET,
+            types.ADD_SET_SUCCESS,
+            types.ADD_SET_FAIL
+        ],
+        promise: () => put(`/${exerciseId}/${id}`, { element: { index: setIndex, amount } }),
+
     }
 );
 
-export const addSet = (setIndex, kg, index) => (
+export const onMetaDataChange = (body, id) => (
     {
-        type: ADD_SET,
-        index,
-        kg,
-        setIndex
+        type: [
+            types.METADATA_CHANGE,
+            types.METADATA_CHANGE_SUCCESS,
+            types.METADATA_CHANGE_FAIL
+        ],
+        promise: () => put(`/exercises/${id}`, { exercise: { body } }),
     }
 );
 
-export const onMetaDataChange = (metaData, index) => (
+export const onDelete = (index, id) => (
     {
-        type: METADATA_CHANGE,
-        metaData,
-        index
-    }
-);
-
-export const onDelete = (index) => (
-    {
-        type: DELETE_SET,
+        type: [
+            types.DELETE_SET,
+            types.DELETE_SET_SUCCESS,
+            types.DELETE_SET_FAIL
+        ],
+        promise: () => del(`/exercises/${id}`),
+        id,
         index
     }
 );

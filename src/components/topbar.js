@@ -10,35 +10,43 @@ import {
   Text,
   View,
   Dimensions,
-  TextInput
+  TextInput,
+  Image
 } from 'react-native';
 import { connect } from 'react-redux';
 import {onChange} from '../search/searchActions';
-
+import dismissKeyboard from 'dismissKeyboard';
+import { primaryColor, placeholderColor } from '../styles'
+import { search } from '../Images/index';
 const {width} = Dimensions.get('window');
 class Topbar extends Component {
-    constructor(props) {
-      super(props);
-    }
+  constructor(props) {
+    super(props);
+  }
 
- onChangeText = (text) => {
-     this.props.dispatch(onChange(text));
- }
+  onChangeText = (text) => {
+    this.props.dispatch(onChange(text));
+  }
+
+  cancelPressed = () => {
+    this.props.dispatch(onChange(''));
+    dismissKeyboard();
+  }
 
   render() {
     return (
       <View style={styles.container}>
-          <View style={{flex: 8, backgroundColor: 'red'}}>
-              <TextInput
-                  style={{height: 40}}
-                  onChangeText={this.onChangeText}
-                  value={this.props.search.get('searchString')}
-              />
-          </View>
-          <View style={{flex: 2, backgroundColor: 'grey', justifyContent: 'center', alignItems: 'center'}}>
-            <Text> Cancel </Text>
-          </View>
-    </View>
+        <View style={{ flex: 8,  }}>
+          <TextInput
+            style={{ height: 40, color: placeholderColor, marginLeft: 16, fontSize: 20 }}
+            onChangeText={this.onChangeText}
+            value={this.props.search.get('searchString') }
+            placeholder="Traningsplan"
+            placeholderTextColor={placeholderColor}
+            />
+        </View>
+        <Image source={search} style={{marginRight: 16}}/>
+      </View>
     );
   }
 }
@@ -46,19 +54,18 @@ class Topbar extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'red',
     width,
-    flexDirection: 'row'
+    marginTop: 25,
+    flexDirection: 'row',
+    borderColor: 'grey',
+    borderBottomWidth: 1,
+    backgroundColor: primaryColor,
+    alignItems: 'center'
   }
-  });
+});
 
 export default connect(({ search }) => (
-    {
-        search
-    }
+  {
+    search
+  }
 ))(Topbar);
-
-
-// export default connect(state => ({
-//   exercises: state.exercises,
-// }))(ListViewWrapper);
