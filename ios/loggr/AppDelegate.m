@@ -31,7 +31,21 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+
+  UIView *statusBar = [[[UIApplication sharedApplication] valueForKey:@"statusBarWindow"] valueForKey:@"statusBar"];
+  
+  if ([statusBar respondsToSelector:@selector(setBackgroundColor:)]) {
+    statusBar.backgroundColor = [UIColor colorWithRed:46/255.0 green:58/255.0 blue:160/255.0 alpha:100];
+  }
+  
+  
   return YES;
+}
+
+
+-(void)setStatusBarBackgroundColor:(UIColor *)color {
+  
+ 
 }
 
 @end

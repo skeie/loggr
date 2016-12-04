@@ -5,7 +5,7 @@ import {
     ListView,
     TextInput,
     Image,
-    TouchableHighlight,
+    TouchableOpacity,
 } from 'react-native';
 import {
     addExercise,
@@ -17,31 +17,42 @@ import {
 import Element from './element';
 import { connect } from 'react-redux';
 import Modal from '../components/modal';
+import { greyBackground } from '../styles';
+import { Map, List } from 'immutable';
+import { create } from '../Images/index';
+import CreateButton from './createButton';
+import CreateModal from './create';
+import dismissKeyboard from 'dismissKeyboard';
+
 const styles = StyleSheet.create({
     listContainer: {
         flex: 9,
-        paddingTop: 30
+        backgroundColor: greyBackground
     },
     headerContainer: {
         flexDirection: 'row',
         flex: 1,
-        margin: 5    
+        margin: 5
     },
     textInput: {
         flex: 1,
         height: 40
-    }
+    },
+    separator: {
+        marginVertical: 10,
+    },
 });
 
 
 class ListViewWrapper extends Component {
-
     constructor(props) {
         super(props);
         this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => !immutable.is(r1, r2) });
         this.state = {
             exercises: this.ds.cloneWithRows(this.props.exercises.get('exercises').toArray()),
             text: '',
+            showModal: false,
+            activeIndex: '0',
         }
         props.dispatch(getAll());
     }
@@ -50,11 +61,12 @@ class ListViewWrapper extends Component {
 
     }
 
-    onAddPress = () => {
-        this.props.dispatch(addExercise(this.state.text));
+    onAddPress = e => {
+        this.props.dispatch(addExercise(e.nativeEvent.text));
         this.setState({
-            text: ''
+            showModal: false
         });
+        dismissKeyboard();
     }
 
     componentWillReceiveProps(nextProps) {
@@ -74,8 +86,8 @@ class ListViewWrapper extends Component {
         }
     }
 
-    onSetChange = (setIndex, kg, index) => {
-        this.props.dispatch(addSet(setIndex, kg, index));
+    onSetChange = (elementId, kg, index) => {
+        this.props.dispatch(addSet(elementId, kg, index));
     }
 
     onMetaDataChange = (metaData, index) => {
@@ -86,12 +98,26 @@ class ListViewWrapper extends Component {
         this.props.dispatch(onDelete(index, id))
     }
 
-    renderRow = (element, sec, i) => <Element
-        element={element}
-        index={i}
-        onMetaDataChange={this.onMetaDataChange}
-        onSetChange={this.onSetChange}
-        onDelete={this.onDelete}/>
+    toggleCreate = () => {
+        this.setState(({showModal}) => ({
+            showModal: !showModal
+        })
+        )
+    }
+
+    renderRow = (element, sec, i) => {
+        return (
+            <Element
+                isActive={this.state.activeIndex === i}
+                element={element}
+                index={i}
+                id={element.get('id')}
+                onMetaDataChange={this.onMetaDataChange}
+                onSetChange={this.onSetChange}
+                onDelete={this.onDelete} />
+        );
+    }
+
 
     render() {
         return (
@@ -101,7 +127,17 @@ class ListViewWrapper extends Component {
                     dataSource={this.state.exercises}
                     renderRow={this.renderRow}
                     initialListSize={25}
+                    renderSeparator={
+                        (sectionId, rowId) => <View key={rowId} style={styles.separator} />
+                    }
                     enableEmptySections
+                    />
+
+                <CreateButton onCreate={this.toggleCreate} />
+                <CreateModal
+                    onBlur={this.onAddPress}
+                    showModal={this.state.showModal}
+                    onClose={this.toggleCreate}
                     />
             </View>
         );

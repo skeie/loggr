@@ -1,5 +1,5 @@
 import * as types from './actionTypes';
-import {post, get, del} from '../utils/fetch';
+import {post, get, del, put} from '../utils/fetch';
 
 export const getAll = () => (
     {
@@ -25,15 +25,17 @@ export const addExercise = (name) => {
     }
 };
 
-export const addSet = (setIndex, amount, index) => (
+export const addSet = (elementId, amount, index) => (
     {
         type: [
             types.ADD_SET,
             types.ADD_SET_SUCCESS,
             types.ADD_SET_FAIL
         ],
-        promise: () => put(`/${exerciseId}/${id}`, { element: { index: setIndex, amount } }),
-
+        promise: () => put(`/elements/${elementId}`, { element: { amount } }),
+        elementId,
+        amount,
+        index
     }
 );
 

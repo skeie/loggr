@@ -1,5 +1,4 @@
-// import queryString from 'query-string';
-const baseURl = 'http://192.168.100.8:3000';
+const baseURl = !__DEV__ ? 'http://192.168.1.54:3000' : 'https://loggr-api.herokuapp.com';
 let authorization = '';
 
 function _appUrl(url) {
@@ -29,21 +28,17 @@ function setHeaders(method, body, optHeader) {
 
 export async function get(url, obj = {}) {
   let constructedUrl = url;
-  console.log('sapdap 1337', _appUrl(url));
   
   //   if (obj.params) {
   //     constructedUrl += `?${queryString.stringify(obj.params)}`;
   //   }
 
   const response = await fetch(_appUrl(url), setHeaders('GET'));
-  console.log('sapdap 1337', response.status);
   
   if (response.status === 201) return;
 
   const responseJson = await response.json();
-  console.log('sapdap 1337', responseJson);
   
-
   if (response.status >= 400) {
     const msg = responseJson.msg || responseJson.message;
     throw {
@@ -91,20 +86,18 @@ export async function del (url, obj) {
 }
 
 
-export async function postMultiPart(url, obj) {
-  const data = new FormData();
+export async function put(url, obj) {
+ 
 
-  for (const key in obj) {
-    data.append(key, JSON.stringify(obj[key]));
-  }
+  console.log('sap url', _appUrl(url));
 
-  const response = await fetch(_appUrl(url),
-    setHeaders('POST', data, { 'Content-Type': 'multipart/form-data' }));
+  const response = await fetch(_appUrl(url), setHeaders('PUT', JSON.stringify(obj)));
 
   if (response.status === 201) return;
 
   const responseJson = await response.json();
-  if (response.stats >= 400) {
+
+  if (response.status >= 400) {
     const msg = responseJson.msg || responseJson.message;
     throw {
       message: msg

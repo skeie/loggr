@@ -16,10 +16,9 @@ export default function reducer(state = initialState, action = {}) {
       const exercises = state.get('exercises');
       newExercise = new Exercise(fromJS(action.payload));
       return state.set('exercises', exercises.push(newExercise));
-    case types.ADD_SET:
-      exercise = state.getIn(['exercises', action.index]);
-      const sets = exercise.get('sets');
-      newExercise = sets.set(action.setIndex, action.kg);
+    case types.ADD_SET_SUCCESS:
+      const sets = state.getIn(['exercises', action.index, 'sets']);
+      newExercise = sets.setIn([action.setIndex, 'amount'], action.amount);
       return state.setIn(['exercises', action.index, 'sets'], newExercise);
     case types.DELETE_SET:
       const newExercises = state.get('exercises').remove(action.index);

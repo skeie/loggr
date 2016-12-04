@@ -19,12 +19,11 @@
     "redux-thunk": "^2.0.1"
   },
   "devDependencies": {
-    "eslint-config-airbnb": "^10.0.0",
-    "eslint-plugin-react": "^6.0.0",
+    "babel-eslint": "^6.0.0-beta.6",
     "eslint": "^2.8.0",
     "eslint-config-airbnb": "^7.0.0",
     "eslint-plugin-import": "^1.5.0",
     "eslint-plugin-jsx-a11y": "^0.6.2",
-    "babel-eslint": "^6.0.0-beta.6"
+    "eslint-plugin-react": "^6.7.1"
   }
 }

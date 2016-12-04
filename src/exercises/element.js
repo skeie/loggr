@@ -12,9 +12,17 @@ import {
     View,
     Dimensions,
     TouchableHighlight,
-    TextInput,
     Image
 } from 'react-native';
+import {
+    elementBox,
+    setColor,
+    exerciseName,
+    underlineInActive,
+    underlineActive,
+    textColor
+} from '../styles';
+import TextInput from '../components/textInput';
 const {width, height} = Dimensions.get('window');
 
 
@@ -22,7 +30,6 @@ class Elements extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            modalOpen: false,
             index: 0
         }
     }
@@ -30,45 +37,18 @@ class Elements extends Component {
 
     onPress = (index = this.state.index) => {
         this.setState({
-            modalOpen: !this.state.modalOpen,
             index
         });
     }
 
 
-    onKgChange = (kg) => {
-        this.props.onSetChange(this.state.index, kg, this.props.index);
+    onBlur = (index) => {
+        if (this.kg) {
+            const elementId = this.props.element.getIn(['sets', index, 'id']);
+            this.props.onSetChange(elementId, this.kg, index)
+        }
+
     }
-
-
-    element = ({ text = '-', onPress = () => { }, index }) => <Text onPress={() => { onPress(index) } } style={styles.elementContainer}>{text}</Text>
-
-    modalContent = () => (
-        <View style={{ flex: 1, backgroundColor: 'white' }}>
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'space-around', flexDirection: 'row' }}>
-                <Text style={{ color: 'black', fontSize: 18 }}>{this.props.element.get('name') } set #{this.state.index + 1}</Text>
-                <Text onPress={this.onPress} style={{ color: 'black', fontSize: 18 }}>Save</Text>
-            </View>
-            <View style={{ flex: 2, alignItems: 'center', justifyContent: 'center' }}>
-                <TextInput
-                    style={{ height: 40, width }}
-                    onChangeText={this.onKgChange}
-                    value={this.props.element.getIn(['sets', this.state.index]) }
-                    autoFocus
-                    />
-            </View>
-            <View style={{ flex: 8, alignItems: 'center', justifyContent: 'center' }}>
-                <TextInput
-                    style={styles.textBox}
-                    editable
-                    multiline
-                    maxLength={400}
-                    value={this.props.element.get('metaData') }
-                    onChangeText={this.onMetaDataChange}
-                    />
-            </View>
-        </View>
-    )
 
     onMetaDataChange = (metaData) => {
         this.props.onMetaDataChange(metaData, this.props.index)
@@ -77,33 +57,60 @@ class Elements extends Component {
     onDelete = () => {
         this.props.onDelete(this.props.index, this.props.element.get('id'));
     }
+
+    isActive = index => this.props.isActive && index === this.state.index
+
+
     render() {
         const {onMetaDataChange, onSetChange, element} = this.props;
         return (
             <View style={styles.container}>
-                {this.element({ text: element.get('name') }) }
-                {this.element({ text: element.getIn(['sets', 0]), onPress: this.onPress, index: 0 }) }
-                {this.element({ text: element.getIn(['sets', 1]), onPress: this.onPress, index: 1 }) }
-                {this.element({ text: element.getIn(['sets', 2]), onPress: this.onPress, index: 2 }) }
-                <TouchableHighlight onPress={this.onDelete}>
-                    <Image source={require('./imgs/garbage.png') } style={{ height: 45, width: 45 }}/>
-                </TouchableHighlight>
-                <Modal visible={this.state.modalOpen}>
-                    {this.modalContent() }
-                </Modal>
+
+                <Text style={styles.name}>
+                    {element.get('name')}
+                </Text>
+                <View style={{ flexDirection: 'row', flex: 1, justifyContent: 'space-between' }}>
+                    {element.get('sets').map((set, i) => (
+                        <TextInput
+                            text={set.get('amount')}
+                            placeholder={set.get('amount')}
+                            onPress={this.onPress}
+                            index={i}
+                            key={i}
+                            onChangeText={kg => this.kg = kg}
+                            onBlur={this.onBlur}
+                            onSubmitEditing={this.onBlur}
+                            isActice={this.isActive(i)}
+                            style={styles.textInput}
+                            autoFocus={false}
+                            keyboardType='phone-pad' />
+                    ))}
+
+                </View>
             </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
+    name: {
+        alignSelf: 'flex-start',
+        marginTop: 20,
+        fontSize: 18,
+        color: exerciseName
+    },
+    textInput: {
+        marginTop: 10,
+        height: 50,
+        width: width / 3,
+        fontSize: 24,
+        color: textColor
+    },
     container: {
-        padding: 10,
-        height: 60,
+        paddingLeft: 16,
+        backgroundColor: elementBox,
+        height: 104,
         width,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
     },
     elementContainer: {
         flex: 1
