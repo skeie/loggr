@@ -1,0 +1,12 @@
+exports[`test Should render Modal correctly 1`] = `
+<Modal
+  animationType="slide"
+  onRequestClose={[Function]}
+  style={
+    Object {
+      "backgroundColor": "blue",
+    }
+  }
+  transparent={true}
+  visible={true} />
+`;
