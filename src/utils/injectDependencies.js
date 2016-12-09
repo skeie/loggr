@@ -1,4 +1,4 @@
-import _isArray from 'lodash/lang/isArray';
+import _isArray from 'lodash.isarray';
 
 function exec(next, action, result) {
   const { promise, type, ...rest } = action;
