@@ -1,0 +1,218 @@
+exports[`test Should render App correctly 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+    }
+  }>
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "height": 56,
+          "paddingHorizontal": 16,
+          "width": 750,
+        },
+        Object {
+          "backgroundColor": "#3E50B4",
+        },
+      ]
+    }>
+    <View
+      style={
+        Object {
+          "flex": 8,
+        }
+      }>
+      <TextInput
+        onChangeText={[Function]}
+        onFocus={[Function]}
+        placeholder="Traningsplan"
+        placeholderTextColor="#FFFFFF"
+        style={
+          Array [
+            Object {
+              "fontSize": 20,
+              "height": 56,
+            },
+          ]
+        }
+        underlineColorAndroid="transparent"
+        value="" />
+    </View>
+    <View
+      accessibilityComponentType={undefined}
+      accessibilityLabel={undefined}
+      accessibilityTraits={undefined}
+      accessible={true}
+      hitSlop={undefined}
+      onLayout={undefined}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+      testID={undefined}>
+      <Image
+        source={1}
+        style={
+          Object {
+            "marginRight": 16,
+          }
+        } />
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "backgroundColor": "#EFF0F1",
+        "flex": 9,
+      }
+    }>
+    <ScrollView
+      dataSource={
+        ListViewDataSource {
+          "items": 0,
+        }
+      }
+      enableEmptySections={true}
+      initialListSize={25}
+      onContentSizeChange={[Function]}
+      onEndReachedThreshold={1000}
+      onKeyboardDidHide={undefined}
+      onKeyboardDidShow={undefined}
+      onKeyboardWillHide={undefined}
+      onKeyboardWillShow={undefined}
+      onLayout={[Function]}
+      onScroll={[Function]}
+      pageSize={1}
+      removeClippedSubviews={true}
+      renderRow={[Function]}
+      renderSeparator={[Function]}
+      scrollEventThrottle={50}
+      scrollRenderAheadDistance={1000}
+      stickyHeaderIndices={Array []}
+      style={
+        Object {
+          "backgroundColor": "#EFF0F1",
+          "flex": 9,
+        }
+      } />
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "bottom": 0,
+          "justifyContent": "center",
+          "position": "absolute",
+          "width": 750,
+        }
+      }>
+      <View
+        accessibilityComponentType={undefined}
+        accessibilityLabel={undefined}
+        accessibilityTraits={undefined}
+        accessible={true}
+        hitSlop={undefined}
+        onLayout={undefined}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+        testID={undefined}>
+        <Image
+          source={1}
+          style={
+            Object {
+              "alignSelf": "center",
+              "marginBottom": 20,
+            }
+          } />
+      </View>
+    </View>
+    <Modal
+      animationType="fade"
+      onRequestClose={[Function]}
+      transparent={true}
+      visible={false}>
+      <View
+        style={
+          Object {
+            "backgroundColor": "rgba(0, 0, 0, 0.75)",
+            "flex": 1,
+          }
+        }>
+        <View
+          style={
+            Object {
+              "backgroundColor": "white",
+              "borderRadius": 5,
+              "height": 137,
+              "justifyContent": "center",
+              "marginHorizontal": 28,
+              "top": 444.6666666666667,
+            }
+          }>
+          <View
+            style={
+              Object {
+                "padding": 28,
+              }
+            }>
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              style={
+                Object {
+                  "color": "#000000",
+                  "fontSize": 20,
+                }
+              }>
+              New Workout
+            </Text>
+            <TextInput
+              autoFocus={true}
+              keyboardType="default"
+              onBlur={[Function]}
+              onChangeText={[Function]}
+              onFocus={[Function]}
+              onSubmitEditing={[Function]}
+              placeholder="Name"
+              placeholderTextColor="#9E9E9E"
+              returnKeyType="done"
+              style={
+                Array [
+                  Object {
+                    "color": "#9E9E9E",
+                  },
+                  Object {
+                    "color": "#212121",
+                    "fontSize": 18,
+                    "width": 638,
+                  },
+                ]
+              }
+              underlineColorAndroid="#009688" />
+          </View>
+        </View>
+      </View>
+    </Modal>
+  </View>
+</View>
+`;

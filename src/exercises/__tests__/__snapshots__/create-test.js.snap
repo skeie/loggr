@@ -1,0 +1,70 @@
+exports[`test Should render Create correctly 1`] = `
+<Modal
+  animationType="fade"
+  onRequestClose={undefined}
+  transparent={true}
+  visible={true}>
+  <View
+    style={
+      Object {
+        "backgroundColor": "rgba(0, 0, 0, 0.75)",
+        "flex": 1,
+      }
+    }>
+    <View
+      style={
+        Object {
+          "backgroundColor": "white",
+          "borderRadius": 5,
+          "height": 137,
+          "justifyContent": "center",
+          "marginHorizontal": 28,
+          "top": 444.6666666666667,
+        }
+      }>
+      <View
+        style={
+          Object {
+            "padding": 28,
+          }
+        }>
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "color": "#000000",
+              "fontSize": 20,
+            }
+          }>
+          New Workout
+        </Text>
+        <TextInput
+          autoFocus={true}
+          keyboardType="default"
+          onBlur={[Function]}
+          onChangeText={[Function]}
+          onFocus={[Function]}
+          onSubmitEditing={undefined}
+          placeholder="Name"
+          placeholderTextColor="#9E9E9E"
+          returnKeyType="done"
+          style={
+            Array [
+              Object {
+                "color": "#9E9E9E",
+              },
+              Object {
+                "color": "#212121",
+                "fontSize": 18,
+                "width": 638,
+              },
+            ]
+          }
+          underlineColorAndroid="#009688" />
+      </View>
+    </View>
+  </View>
+</Modal>
+`;
