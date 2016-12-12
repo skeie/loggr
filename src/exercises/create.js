@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
 
 })
 
-const Create = ({showModal, onBlur, onClose}) => (
+const Create = ({showModal, onBlur, onClose, onChangeText}) => (
     <Modal
         visible={showModal}
         transparent
@@ -55,6 +55,7 @@ const Create = ({showModal, onBlur, onClose}) => (
                 <View style={styles.innerContainer}>
                     <Text style={styles.title}>New Workout</Text>
                     <TextInput
+                        onChangeText={onChangeText}
                         onBlur={onBlur}
                         placeholder='Name'
                         text=''

@@ -14,7 +14,7 @@ import {
     onDelete,
     getAll
 } from './actions';
-import Element from './element';
+import Element from '../element/element';
 import { connect } from 'react-redux';
 import Modal from '../components/modal';
 import { greyBackground } from '../styles';
@@ -52,7 +52,6 @@ class ListViewWrapper extends Component {
             exercises: this.ds.cloneWithRows(this.props.exercises.get('exercises').toArray()),
             text: '',
             showModal: false,
-            activeIndex: '0',
         }
         props.dispatch(getAll());
     }
@@ -61,8 +60,9 @@ class ListViewWrapper extends Component {
 
     }
 
-    onAddPress = e => {
-        this.props.dispatch(addExercise(e.nativeEvent.text));
+    onAddPress = () => {
+        debugger;
+        this.props.dispatch(addExercise(this.text));
         this.setState({
             showModal: false
         });
@@ -102,15 +102,16 @@ class ListViewWrapper extends Component {
         this.setState(({showModal}) => ({
             showModal: !showModal
         })
-        )
+        );
     }
+
+    onChangeText = text => this.text = text;
 
     renderRow = (element, sec, i) => {
         return (
             <Element
-                isActive={this.state.activeIndex === i}
+                elementIndex={parseInt(i, 10)}
                 element={element}
-                index={i}
                 id={element.get('id')}
                 onMetaDataChange={this.onMetaDataChange}
                 onSetChange={this.onSetChange}
@@ -120,6 +121,7 @@ class ListViewWrapper extends Component {
 
 
     render() {
+
         return (
             <View style={styles.listContainer}>
                 <ListView
@@ -135,6 +137,7 @@ class ListViewWrapper extends Component {
 
                 <CreateButton onCreate={this.toggleCreate} />
                 <CreateModal
+                    onChangeText={this.onChangeText}
                     onBlur={this.onAddPress}
                     showModal={this.state.showModal}
                     onClose={this.toggleCreate}

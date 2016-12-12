@@ -17,9 +17,11 @@ const myTextInput = ({
     onSubmitEditing,
     returnKeyType = 'done',
     keyboardType = 'default',
-    onChangeText  = NO_OP
+    onChangeText = NO_OP,
+    onScroll = NO_OP
 }) => (
         <TextInput
+            onScroll={onScroll} 
             placeholder={placeholder}
             key={index}
             style={[Styles.textInput, style]}
@@ -28,10 +30,10 @@ const myTextInput = ({
             placeholderTextColor={placeholderTextColor}
             onBlur={() => onBlur(index)}
             autoFocus={autoFocus}
-            onSubmitEditing={onSubmitEditing}
-            returnKeyType={returnKeyType} 
+            onSubmitEditing={() => onBlur(index)}
+            returnKeyType={returnKeyType}
             keyboardType={keyboardType}
-            onChangeText={onChangeText }
+            onChangeText={onChangeText}
             >
         </TextInput>
     );

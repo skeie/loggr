@@ -12,14 +12,20 @@ let exercise = {};
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case types.ADD_EXERCISE_SUCCESS:
-      debugger;
       const exercises = state.get('exercises');
       newExercise = new Exercise(fromJS(action.payload));
       return state.set('exercises', exercises.push(newExercise));
     case types.ADD_SET_SUCCESS:
-      const sets = state.getIn(['exercises', action.index, 'sets']);
-      newExercise = sets.setIn([action.setIndex, 'amount'], action.amount);
-      return state.setIn(['exercises', action.index, 'sets'], newExercise);
+      const tempExercises = state.get('exercises');
+      return state.set('exercises', tempExercises.map(exercise => exercise.update('sets', (sets) => (
+        sets.map(set => {
+          if (set.get('id') === action.elementId) {
+            return set.set('amount', action.amount)
+          } else {
+            return set
+          }
+        })
+      ))));
     case types.DELETE_SET:
       const newExercises = state.get('exercises').remove(action.index);
       return state.set('exercises', newExercises);
@@ -41,8 +47,8 @@ export default function reducer(state = initialState, action = {}) {
     case types.GET_EXERCISE_SUCCESS:
       const newData = action.payload.data.map(exercise => {
         return new Exercise(fromJS(exercise));
-      }); 
-    
+      });
+
       return state.merge({
         isFetching: false,
         error: '',

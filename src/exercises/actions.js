@@ -1,5 +1,5 @@
 import * as types from './actionTypes';
-import {post, get, del, put} from '../utils/fetch';
+import { post, get, del, put } from '../utils/fetch';
 
 export const getAll = () => (
     {
@@ -62,3 +62,4 @@ export const onDelete = (index, id) => (
         index
     }
 );
+

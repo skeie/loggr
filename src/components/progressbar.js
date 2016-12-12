@@ -6,6 +6,7 @@ import {
   Text
 } from 'react-native';
 
+
 const styles = StyleSheet.create({
   ProgressBarContainer: {
     flex: 1,

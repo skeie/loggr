@@ -67,7 +67,7 @@ class Topbar extends Component {
     const backgroundColor = { backgroundColor: isActive ? 'white' : primaryColor }
     const underlineColor = isActive ? underlineActive : "transparent";
     const textColor = isActive ? textColor : placeholderColor;
-    const placeholder = isActive ? "Search..." : "Traningsplan";
+    const placeholder = isActive ? "Search..." : "Loggr";
 
     return (
       <View style={[styles.container, backgroundColor]}>
