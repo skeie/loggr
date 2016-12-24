@@ -18,7 +18,8 @@ import { connect } from 'react-redux';
 import { onChange } from '../search/searchActions';
 import dismissKeyboard from 'dismissKeyboard';
 import { primaryColor, placeholderColor, underlineActive, textColor } from '../styles'
-import { search } from '../Images/index';
+import { search, addBtn, cancelBtn } from '../Images';
+import { toggleCreateModal } from '../exercises/actions';
 
 const {width} = Dimensions.get('window');
 
@@ -35,10 +36,10 @@ class Topbar extends Component {
   }
 
   onFocus = () => {
-    this.setState({isActive: true});
+    this.setState({ isActive: true });
   }
 
-    toggleSearchPress = () => {
+  toggleSearchPress = () => {
     this.setState(({isActive}) => ({
       isActive: !isActive
     }))
@@ -57,7 +58,7 @@ class Topbar extends Component {
     if (this.state.isActive) {
       this.cancelPressed();
     } else {
-      this.toggleSearchPress();
+      this.props.dispatch(toggleCreateModal());
     }
   }
 
@@ -67,28 +68,29 @@ class Topbar extends Component {
     const backgroundColor = { backgroundColor: isActive ? 'white' : primaryColor }
     const underlineColor = isActive ? underlineActive : "transparent";
     const textColor = isActive ? textColor : placeholderColor;
-    const placeholder = isActive ? "Search..." : "Loggr";
-
+    const imgSrc = isActive ? cancelBtn : addBtn;
     return (
       <View style={[styles.container, backgroundColor]}>
-        <View style={{ flex: 8, }}>
+        <TouchableOpacity style={{ flex: 1, flexDirection: 'row' }} onPress={this.toggleSearchPress}>
           <TextInput
-            style={[styles.textInput]}
+            style={styles.textInput}
             onChangeText={this.onChangeText}
             value={this.props.search.get('searchString')}
-            placeholder={placeholder}
+            placeholder="Search"
             placeholderTextColor={placeholderColor}
             underlineColorAndroid={underlineColor}
             onFocus={this.onFocus}
             placeholderTextColor={textColor}
             />
-        </View>
-        <TouchableOpacity onPress={this.onIconPressed} activeOpacity={0}>
-          {isActive ?
-            <Text style={{fontSize: 25}}> X </Text>
-            : <Image source={search} style={{ marginRight: 16 }} />
-          }
-
+          <View style={{position: 'absolute', top: 21, left: 75 }}>
+            <Image source={search} />
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={this.onIconPressed}
+          activeOpacity={0}
+          style={styles.iconContainer}>
+          <Image source={imgSrc} />
         </TouchableOpacity>
       </View>
     );
@@ -106,7 +108,12 @@ const styles = StyleSheet.create({
   },
   textInput: {
     height: 56,
-    fontSize: 20
+    fontSize: 20,
+    flex: 7
+  },
+  iconContainer: {
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 });
 

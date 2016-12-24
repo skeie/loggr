@@ -25,41 +25,50 @@ export const addExercise = (name) => {
     }
 };
 
-export const addSet = (elementId, amount, index) => (
+export const addSet = (elementId, element, index) => (
     {
         type: [
             types.ADD_SET,
             types.ADD_SET_SUCCESS,
             types.ADD_SET_FAIL
         ],
-        promise: () => put(`/elements/${elementId}`, { element: { amount } }),
+        promise: () => put(`/elements/${elementId}`, { element }),
         elementId,
-        amount,
+        element,
         index
     }
 );
 
-export const onMetaDataChange = (body, id) => (
+export const onExerciseUpdate = (id, exercise, elementIndex) => (
     {
         type: [
-            types.METADATA_CHANGE,
-            types.METADATA_CHANGE_SUCCESS,
-            types.METADATA_CHANGE_FAIL
+            types.EXERCISE_UPDATE,
+            types.EXERCISE_UPDATE_SUCCESS,
+            types.EXERCISE_UPDATE_FAIL
         ],
-        promise: () => put(`/exercises/${id}`, { exercise: { body } }),
+        promise: () => put(`/exercises/${id}`, { exercise }),
+        exercise,
+        id,
+        elementIndex
     }
 );
 
-export const onDelete = (index, id) => (
+export const onDelete = (id, index) => (
     {
         type: [
-            types.DELETE_SET,
-            types.DELETE_SET_SUCCESS,
-            types.DELETE_SET_FAIL
+            types.DELETE_EXERCISE,
+            types.DELETE_EXERCISE_SUCCESS,
+            types.DELETE_EXERCISE_FAIL
         ],
         promise: () => del(`/exercises/${id}`),
         id,
         index
     }
 );
+
+export const toggleCreateModal = () => (
+    {
+        type: types.TOGGLE_CREATE_MODAL
+    }
+)
 

@@ -6,28 +6,37 @@ import {
     TextInput,
     Image,
     TouchableOpacity,
+    Animated
 } from 'react-native';
 import {
     addExercise,
     addSet,
     onMetaDataChange,
     onDelete,
-    getAll
+    getAll,
+    toggleCreateModal
 } from './actions';
 import Element from '../element/element';
 import { connect } from 'react-redux';
-import Modal from '../components/modal';
 import { greyBackground } from '../styles';
 import { Map, List } from 'immutable';
 import { create } from '../Images/index';
-import CreateButton from './createButton';
-import CreateModal from './create';
+import CreateButton from './components/createButton';
+import CreateModal from './components/createModal';
+import EditModal from './components/editModal';
 import dismissKeyboard from 'dismissKeyboard';
+import { showModal } from '../element/elementActions';
+import fixture from './fixtures/exercisesFixtures';
 
 const styles = StyleSheet.create({
+    listview: {
+        flex: 1
+    },
     listContainer: {
-        flex: 9,
-        backgroundColor: greyBackground
+        backfaceVisibility: 'hidden',
+        backgroundColor: greyBackground,
+        flex: 1
+
     },
     headerContainer: {
         flexDirection: 'row',
@@ -45,6 +54,7 @@ const styles = StyleSheet.create({
 
 
 class ListViewWrapper extends Component {
+
     constructor(props) {
         super(props);
         this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => !immutable.is(r1, r2) });
@@ -52,6 +62,7 @@ class ListViewWrapper extends Component {
             exercises: this.ds.cloneWithRows(this.props.exercises.get('exercises').toArray()),
             text: '',
             showModal: false,
+            showMetaModal: false
         }
         props.dispatch(getAll());
     }
@@ -61,11 +72,7 @@ class ListViewWrapper extends Component {
     }
 
     onAddPress = () => {
-        debugger;
         this.props.dispatch(addExercise(this.text));
-        this.setState({
-            showModal: false
-        });
         dismissKeyboard();
     }
 
@@ -87,7 +94,7 @@ class ListViewWrapper extends Component {
     }
 
     onSetChange = (elementId, kg, index) => {
-        this.props.dispatch(addSet(elementId, kg, index));
+        this.props.dispatch(addSet(elementId, {amount: kg}, index));
     }
 
     onMetaDataChange = (metaData, index) => {
@@ -99,10 +106,7 @@ class ListViewWrapper extends Component {
     }
 
     toggleCreate = () => {
-        this.setState(({showModal}) => ({
-            showModal: !showModal
-        })
-        );
+        this.props.dispatch(toggleCreateModal());
     }
 
     onChangeText = text => this.text = text;
@@ -115,17 +119,22 @@ class ListViewWrapper extends Component {
                 id={element.get('id')}
                 onMetaDataChange={this.onMetaDataChange}
                 onSetChange={this.onSetChange}
-                onDelete={this.onDelete} />
+                onDelete={this.onDelete}
+                />
         );
     }
 
+    toggleModal = () => {
+        this.props.dispatch(toggleModal(0));
+    }
+
+
 
     render() {
-
         return (
             <View style={styles.listContainer}>
                 <ListView
-                    style={styles.listContainer}
+                    style={styles.listview}
                     dataSource={this.state.exercises}
                     renderRow={this.renderRow}
                     initialListSize={25}
@@ -134,13 +143,17 @@ class ListViewWrapper extends Component {
                     }
                     enableEmptySections
                     />
-
-                <CreateButton onCreate={this.toggleCreate} />
                 <CreateModal
                     onChangeText={this.onChangeText}
                     onBlur={this.onAddPress}
-                    showModal={this.state.showModal}
+                    showModal={this.props.exercises.get('showCreateModal')}
                     onClose={this.toggleCreate}
+                    />
+                <EditModal
+                    onChangeText={this.onChangeText}
+                    onBlur={this.onAddPress}
+                    showModal={this.props.element.get('showMetaModal')}
+                    onClose={this.toggleModal}
                     />
             </View>
         );
@@ -149,5 +162,7 @@ class ListViewWrapper extends Component {
 
 export default connect(state => ({
     exercises: state.exercises,
-    search: state.search
+    search: state.search,
+    element: state.element
 }))(ListViewWrapper);
+    // exercises: fixture,

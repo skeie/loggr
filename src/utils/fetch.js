@@ -1,4 +1,4 @@
-const baseURl = __DEV__ ? 'http://192.168.1.54:3000' : 'https://loggr-api.herokuapp.com';
+const baseURl = __DEV__ ? 'http://192.168.0.136:3000' : 'https://loggr-api.herokuapp.com';
 let authorization = '';
 
 function _appUrl(url) {

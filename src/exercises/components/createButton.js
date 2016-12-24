@@ -1,8 +1,8 @@
 
 import React from 'react';
 import { TouchableOpacity, Image, StyleSheet, View } from 'react-native';
-import { create } from '../Images/index';
-import { width } from '../utils/utils';
+import { create } from '../../Images/index';
+import { width } from '../../utils/utils';
 
 const styles = StyleSheet.create({
     container: {

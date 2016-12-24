@@ -5,7 +5,7 @@ import {
     Text,
     View,
     Dimensions,
-    TouchableHighlight,
+    TouchableWithoutFeedback,
     Image,
     Animated,
     PanResponder
@@ -20,8 +20,8 @@ import {
 } from '../styles';
 import TextInput from '../components/textInput';
 import { connect } from 'react-redux';
-import { textInputChange } from './elementActions';
-import generateProps from 'react-generate-props'
+import { textInputChange, toggleModal } from './elementActions';
+import { more } from '../Images/index';
 const {width, height} = Dimensions.get('window');
 
 
@@ -33,55 +33,13 @@ class Elements extends Component {
         }
     }
 
-    static propTypes = {
-        title: React.PropTypes.string.isRequired,
-        count: React.PropTypes.number.isRequired,
-    }
-
-    componentWillMount() {
-        this.panResponder = PanResponder.create({
-            // Ask to be the responder:
-            onStartShouldSetPanResponder: (evt, gestureState) => true,
-            onMoveShouldSetPanResponder: (evt, gestureState) => true,
-
-            onPanResponderGrant: (evt, gestureState) => {
-                // The guesture has started. Show visual feedback so the user knows
-                // what is happening!
-
-                // gestureState.d{x,y} will be set to zero now
-            },
-            onPanResponderMove: (evt, gestureState) => {
-                // The most recent move distance is gestureState.move{X,Y}
-                console.log(gestureState.move{X,Y})
-
-                // The accumulated gesture distance since becoming responder is
-                // gestureState.d{x,y}
-            },
-            onPanResponderTerminationRequest: (evt, gestureState) => true,
-            onPanResponderRelease: (evt, gestureState) => {
-                // The user has released all touches while this view is the
-                // responder. This typically means a gesture has succeeded
-            },
-            onPanResponderTerminate: (evt, gestureState) => {
-                // Another component has become the responder, so this gesture
-                // should be cancelled
-            },
-            onShouldBlockNativeResponder: (evt, gestureState) => {
-                // Returns whether this component should block native components from becoming the JS
-                // responder. Returns true by default. Is currently only supported on android.
-                return true;
-            },
-        });
-    }
-
-
     onPress = (index = this.state.index) => {
         this.props.dispatch(textInputChange(this.props.elementIndex, index));
     }
 
-    shouldComponentUpdate({currentIndex}) {
+    shouldComponentUpdate({currentIndex, element}) {
         return currentIndex.get('elementIndex') === this.props.elementIndex ||
-            this.props.elementIndex === this.props.currentIndex.get('elementIndex')
+            this.props.elementIndex === this.props.currentIndex.get('elementIndex') || this.props.element !== element;
     }
 
 
@@ -89,7 +47,7 @@ class Elements extends Component {
         if (this.kg) {
             const elementId = this.props.element.getIn(['sets', index, 'id']);
             this.props.onSetChange(elementId, this.kg, index);
-            setTimeout(() => { console.log('yes'); this.onPress(index + 1); })
+            setTimeout(() => { this.onPress(index + 1); })
         }
 
     }
@@ -107,19 +65,20 @@ class Elements extends Component {
         return currentIndex.get('elementIndex') === elementIndex && index === currentIndex.get('setIndex');
     }
 
-
+    onLongPress = () => {
+        this.props.dispatch(toggleModal(this.props.elementIndex));
+    }
 
     render() {
         const {onMetaDataChange, onSetChange, element, currentIndex} = this.props;
 
         return (
-            <View style={styles.container}>
-
-                <Text style={styles.name}>
-                    {element.get('name')}
-                </Text>
-                <View style={{ flexDirection: 'row', flex: 1, justifyContent: 'space-between' }}>
-                    <Animated.View {...this.panResponder.panHandlers}>
+            <TouchableWithoutFeedback onLongPress={this.onLongPress}>
+                <View style={styles.container}>
+                    <Text style={styles.name}>
+                        {element.get('name')}
+                    </Text>
+                    <View style={{ flexDirection: 'row', flex: 1, justifyContent: 'space-between' }}>
                         {element.get('sets').map((set, i) => (
                             <TextInput
                                 text={set.get('amount')}
@@ -131,13 +90,13 @@ class Elements extends Component {
                                 onBlur={this.onBlur}
                                 onSubmitEditing={this.onBlur}
                                 isActice={this.isActive(i)}
-                                style={styles.textInput}
                                 keyboardType='phone-pad'
-                                onScroll={l => console.log('onScroll 1337', l)} />
+                                style={styles.textInput}
+                                />
                         ))}
-                    </Animated.View>
+                    </View>
                 </View>
-            </View>
+            </TouchableWithoutFeedback>
         );
     }
 }
@@ -154,7 +113,7 @@ const styles = StyleSheet.create({
         height: 50,
         width: width / 3,
         fontSize: 24,
-        color: textColor
+        color: 'red'
     },
     container: {
         paddingLeft: 16,

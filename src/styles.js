@@ -9,3 +9,5 @@ export const exerciseName = '#747474';
 export const underlineActive = '#009688';
 export const textColor = '#212121';
 export const headerColor = '#000000';
+export const errorColor = '#D50000';
+
