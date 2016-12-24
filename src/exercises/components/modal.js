@@ -29,7 +29,14 @@ const styles = StyleSheet.create({
         borderRadius: 5
     },
     overlay: {
-        flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.75)'
+        flex: 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.75)'
+    },
+    xBtn: {
+        fontSize: 20,
+        color: 'white',
+        textAlign: 'right',
+        margin: 15
     }
 });
 
@@ -39,10 +46,10 @@ class LoggerModal extends Component {
     }
 
     shouldComponentUpdate({showModal, controll}) {
-        return this.props.showModal != showModal || 
-        controll.get('keyboardHeight') != this.props.controll.get('keyboardHeight');
+        return this.props.showModal != showModal ||
+            controll.get('keyboardHeight') != this.props.controll.get('keyboardHeight');
     }
-    
+
 
     render() {
         const {
@@ -52,8 +59,8 @@ class LoggerModal extends Component {
             controll
         } = this.props;
 
-        const top = { 
-            marginTop: controll.get('keyboardHeight') - modalHeight - suggestedKeyboardWordHeigth 
+        const top = {
+            marginTop: controll.get('keyboardHeight') - modalHeight - suggestedKeyboardWordHeigth
         };
         return (
             <Modal
@@ -62,7 +69,7 @@ class LoggerModal extends Component {
                 animationType='fade'
                 onRequestClose={onClose}>
                 <View style={styles.overlay}>
-                    <Text style={{fontSize: 20, color: 'white', textAlign: 'right', margin: 20}} onPress={onClose}>X</Text>
+                    <Text style={styles.xBtn} onPress={onClose}>X</Text>
                     <View style={[styles.container, top]}>
                         {children}
                     </View>

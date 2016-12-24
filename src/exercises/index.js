@@ -27,10 +27,11 @@ import EditModal from './components/editModal';
 import dismissKeyboard from 'dismissKeyboard';
 import { showModal } from '../element/elementActions';
 import fixture from './fixtures/exercisesFixtures';
-
+import { toggleModal } from '../element/elementActions';
 const styles = StyleSheet.create({
     listview: {
-        flex: 1
+        flex: 1,
+        height: 200
     },
     listContainer: {
         backfaceVisibility: 'hidden',
@@ -127,8 +128,6 @@ class ListViewWrapper extends Component {
     toggleModal = () => {
         this.props.dispatch(toggleModal(0));
     }
-
-
 
     render() {
         return (

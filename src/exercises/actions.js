@@ -72,3 +72,14 @@ export const toggleCreateModal = () => (
     }
 )
 
+export const addNewSet = (elementIndex) => (
+    {
+        type: [
+            types.ADD_NEW_SET,
+            types.ADD_NEW_SET_SUCCESS,
+            types.ADD_NEW_SET_FAIL
+        ],
+        promise: () => post(`/${elementIndex}/element`),
+        elementIndex,
+    }
+)

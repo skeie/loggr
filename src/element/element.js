@@ -7,8 +7,7 @@ import {
     Dimensions,
     TouchableWithoutFeedback,
     Image,
-    Animated,
-    PanResponder
+    ScrollView
 } from 'react-native';
 import {
     elementBox,
@@ -21,7 +20,7 @@ import {
 import TextInput from '../components/textInput';
 import { connect } from 'react-redux';
 import { textInputChange, toggleModal } from './elementActions';
-import { more } from '../Images/index';
+import { more, addBtnBlack } from '../Images';
 const {width, height} = Dimensions.get('window');
 
 class Elements extends Component {
@@ -96,7 +95,8 @@ class Elements extends Component {
                     <Text style={styles.name}>
                         {element.get('name')}
                     </Text>
-                    <View style={{ flexDirection: 'row', flex: 1, justifyContent: 'space-between' }}>
+                    <View
+                        style={{ flexDirection: 'row', flex: 1, justifyContent: 'space-between' }}>
                         {element.get('sets').map((set, i) => (
                             <TextInput
                                 setRef={ref => this.inputs[i] = ref}

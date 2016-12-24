@@ -11,4 +11,3 @@ export const toggleModal = (elementIndex) => ({
     type: ELEMENT_TOGGLE_MODAL,
     elementIndex
 });
-

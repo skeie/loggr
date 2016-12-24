@@ -56,6 +56,7 @@ export default function reducer(state = initialState, action = {}) {
         exercises: newData
       });
     case types.EXERCISE_UPDATE_SUCCESS:
+    case types.ADD_NEW_SET_SUCCESS:
       return state.setIn(['exercises', action.elementIndex], new Exercise(fromJS(action.payload)));
     case types.TOGGLE_CREATE_MODAL:
       return state.set('showCreateModal', !state.get('showCreateModal'));
