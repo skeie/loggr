@@ -23,12 +23,3 @@ if (__DEV__) {
 // As everything is prepared, we can go ahead and combine all parts as usual
 const createStoreWithMiddleware = applyMiddleware(...middlewares)(createStore);
 export const store = createStoreWithMiddleware(rootReducer);
-
-export function loadOfflineData() {
-  // const load = storage.createLoader(engine);
-
-  // return load(store)
-  //   .catch((error) => {
-  //       console.error('Failed to get loaded state', error);
-  //   });
-}

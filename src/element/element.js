@@ -24,17 +24,17 @@ import { textInputChange, toggleModal } from './elementActions';
 import { more } from '../Images/index';
 const {width, height} = Dimensions.get('window');
 
-
 class Elements extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            index: 0
-        }
+        this.inputs = [];
     }
 
-    onPress = (index = this.state.index) => {
-        this.props.dispatch(textInputChange(this.props.elementIndex, index));
+    onPress = (index = 0) => {
+        if (this.props.element.get('sets').size > index) {
+            // don't increment if we are at the last element in the sets array
+            this.props.dispatch(textInputChange(this.props.elementIndex, index));
+        }
     }
 
     shouldComponentUpdate({currentIndex, element}) {
@@ -42,12 +42,27 @@ class Elements extends Component {
             this.props.elementIndex === this.props.currentIndex.get('elementIndex') || this.props.element !== element;
     }
 
+    shouldSetAutoFocus = currentIndex => (
+        currentIndex.get('elementIndex') === this.props.elementIndex &&
+        currentIndex.get('setIndex') != this.props.currentIndex.get('setIndex')
+    )
+
+    componentWillReceiveProps({currentIndex}) {
+        if (this.shouldSetAutoFocus(currentIndex)) {
+            this.inputs[currentIndex.get('setIndex')].focus();
+        }
+
+    }
+
+
 
     onBlur = (index) => {
         if (this.kg) {
-            const elementId = this.props.element.getIn(['sets', index, 'id']);
+            const { element } = this.props;
+            const elementId = element.getIn(['sets', index, 'id']);
             this.props.onSetChange(elementId, this.kg, index);
             setTimeout(() => { this.onPress(index + 1); })
+
         }
 
     }
@@ -61,8 +76,11 @@ class Elements extends Component {
     }
 
     isActive = index => {
-        const {elementIndex, currentIndex} = this.props;
-        return currentIndex.get('elementIndex') === elementIndex && index === currentIndex.get('setIndex');
+        // const {elementIndex, currentIndex} = this.props;
+        // console.log(this.inputs, 'sap')
+        // if(currentIndex.get('elementIndex') === elementIndex && index === currentIndex.get('setIndex')) {
+        //     this.inputs[index].focus();
+        // } 
     }
 
     onLongPress = () => {
@@ -81,6 +99,7 @@ class Elements extends Component {
                     <View style={{ flexDirection: 'row', flex: 1, justifyContent: 'space-between' }}>
                         {element.get('sets').map((set, i) => (
                             <TextInput
+                                setRef={ref => this.inputs[i] = ref}
                                 text={set.get('amount')}
                                 placeholder={set.get('amount')}
                                 onPress={this.onPress}
@@ -89,7 +108,6 @@ class Elements extends Component {
                                 onChangeText={kg => this.kg = kg}
                                 onBlur={this.onBlur}
                                 onSubmitEditing={this.onBlur}
-                                isActice={this.isActive(i)}
                                 keyboardType='phone-pad'
                                 style={styles.textInput}
                                 />
@@ -113,7 +131,7 @@ const styles = StyleSheet.create({
         height: 50,
         width: width / 3,
         fontSize: 24,
-        color: 'red'
+        color: textColor
     },
     container: {
         paddingLeft: 16,

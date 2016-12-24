@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
     View,
     TouchableOpacity,
@@ -10,18 +10,22 @@ import {
 import { create } from '../../Images/index';
 import { width, height } from '../../utils/utils';
 import { headerColor, setColor, textColor } from '../../styles';
+import { isAndroid } from '../../utils/utils';
+import { connect } from 'react-redux';
 
 export const marginHorizontal = 28;
 export const textInputWidth = width - marginHorizontal * 4;
 
 
+const modalHeight = 200;
+const suggestedKeyboardWordHeigth = isAndroid() ? 100 : 0;
+
 const styles = StyleSheet.create({
     container: {
         justifyContent: 'center',
         marginHorizontal,
-        top: height / 3.5, // get keyboard height and determine this
         backgroundColor: 'white',
-        height: 200,
+        height: modalHeight,
         borderRadius: 5
     },
     overlay: {
@@ -29,25 +33,45 @@ const styles = StyleSheet.create({
     }
 });
 
-const LoggrModal = ({
-    showModal,
-    onBlur,
-    onClose,
-    onChangeText,
-    children
-}) => (
-        <Modal
-            visible={showModal}
-            transparent
-            animationType='fade'
-            onRequestClose={onClose}>
-            <View style={styles.overlay}>
-                <Text onPress={onClose}>X</Text>
-                <View style={styles.container}>
-                    {children}
-                </View>
-            </View>
-        </Modal>
-    );
+class LoggerModal extends Component {
+    constructor(props) {
+        super(props);
+    }
 
-export default LoggrModal;
+    shouldComponentUpdate({showModal, controll}) {
+        return this.props.showModal != showModal || 
+        controll.get('keyboardHeight') != this.props.controll.get('keyboardHeight');
+    }
+    
+
+    render() {
+        const {
+            showModal,
+            onClose,
+            children,
+            controll
+        } = this.props;
+
+        const top = { 
+            marginTop: controll.get('keyboardHeight') - modalHeight - suggestedKeyboardWordHeigth 
+        };
+        return (
+            <Modal
+                visible={showModal}
+                transparent
+                animationType='fade'
+                onRequestClose={onClose}>
+                <View style={styles.overlay}>
+                    <Text style={{fontSize: 20, color: 'white', textAlign: 'right', margin: 20}} onPress={onClose}>X</Text>
+                    <View style={[styles.container, top]}>
+                        {children}
+                    </View>
+                </View>
+            </Modal>
+        );
+    }
+}
+
+export default connect(({controll}) => ({
+    controll
+}))(LoggerModal);

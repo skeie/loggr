@@ -8,6 +8,7 @@ import Progressbar from './components/progressbar';
 require('./config/onRun');
 import Topbar from './components/topbar';
 import Exercises from './exercises';
+import KeyboardHeightController from './controllers/keyboardHeightController';
 
 export default class App extends Component {
 
@@ -16,25 +17,17 @@ export default class App extends Component {
     this.state = {
       loaded: true
     };
-
-    // loadOfflineData()
-    // .finally(() => {
-    //   this.setState({ loaded: true });
-    // });
   }
 
   render() {
-    if (this.state.loaded) {
-      return (
-        <Provider store={store}>
-          <View style={{ flex: 1 }}>
-            <Topbar />
-            <Exercises />
-          </View>
-        </Provider>
-      );
-    } else {
-      return <Progressbar />;
-    }
+    return (
+      <Provider store={store}>
+        <View style={{ flex: 1 }}>
+          <Topbar />
+          <Exercises />
+          <KeyboardHeightController />
+        </View>
+      </Provider>
+    );
   }
 }

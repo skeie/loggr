@@ -38,10 +38,12 @@ class LoggrTextInput extends Component {
             returnKeyType = 'done',
             keyboardType = 'default',
             onScroll = NO_OP,
-            value
+            value,
+            setRef = NO_OP
         } = this.props;
         return (
             <TextInput
+                ref={setRef}
                 placeholder={placeholder}
                 key={index}
                 style={[Styles.textInput, style]}

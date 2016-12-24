@@ -28,7 +28,6 @@ export default function reducer(state = initialState, action = {}) {
         })
       ))));
     case types.DELETE_EXERCISE_SUCCESS:
-      console.log('dette er index dau', action.index);
 
       const newExercises = state.get('exercises').remove(action.index);
       return state.set('exercises', newExercises);
@@ -49,7 +48,7 @@ export default function reducer(state = initialState, action = {}) {
         return new Exercise(fromJS(exercise));
       });
 
-      
+
       return state.merge({
         isFetching: false,
         error: '',
@@ -58,7 +57,7 @@ export default function reducer(state = initialState, action = {}) {
       });
     case types.EXERCISE_UPDATE_SUCCESS:
       return state.setIn(['exercises', action.elementIndex], new Exercise(fromJS(action.payload)));
-    case types.TOGGLE_CREATE_MODAL: 
+    case types.TOGGLE_CREATE_MODAL:
       return state.set('showCreateModal', !state.get('showCreateModal'));
     default:
       return state;

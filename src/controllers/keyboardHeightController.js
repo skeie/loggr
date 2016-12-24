@@ -1,33 +1,41 @@
-import { Dimensions } from 'react-native'
-import React, { View, DeviceEventEmitter } from 'react-native'
-class SomeScene extends React.Component {
+import React from 'react';
+import { View, DeviceEventEmitter, Dimensions, Keyboard, Platform } from 'react-native';
+import { keyboardHeightChange } from './controllerActions';
+import { connect } from 'react-redux';
+
+class KeyboardController extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {
-            visibleHeight: Dimensions.get('window').height
-        }
     }
 
     componentWillMount() {
-        DeviceEventEmitter.addListener('keyboardWillShow', this.keyboardWillShow.bind(this))
-        DeviceEventEmitter.addListener('keyboardWillHide', this.keyboardWillHide.bind(this))
+        const updateListener = Platform.OS === 'android' ? 'keyboardDidShow' : 'keyboardWillShow';
+        const resetListener = Platform.OS === 'android' ? 'keyboardDidHide' : 'keyboardWillHide';
+        this._listeners = [
+            Keyboard.addListener(updateListener, this.updateKeyboardSpace),
+            //Keyboard.addListener(resetListener, this.resetKeyboardSpace)
+        ];
+        // DeviceEventEmitter.addListener('keyboardWillHide', this.keyboardWillHide.bind(this))
     }
 
-    keyboardWillShow(e) {
-        const newSize = Dimensions.get('window').height - e.endCoordinates.height
-        this.setState({ visibleHeight: newSize })
+    updateKeyboardSpace = (e) => {
+        console.log('yolo 1337');
+        const newSize = Dimensions.get('window').height - e.endCoordinates.height;
+        console.log(newSize, this.newSize, '1340');
+        if (this.newSize != newSize) {
+            this.newSize = newSize;
+            this.props.dispatch(keyboardHeightChange(newSize));
+        }
+
     }
 
-    keyboardWillHide(e) {
-        this.setState({ visibleHeight: Dimensions.get('window').height })
-    }
-
+    // keyboardWillHide(e) {
+    //     this.setState({ visibleHeight: Dimensions.get('window').height })
+    // }
 
     render() {
-        return (
-            <View style={{ height: this.state.visibleHeight }}>
-                ...
-      </View>
-        )
+        return null;
     }
 }
+
+export default connect()(KeyboardController);
