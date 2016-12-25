@@ -6,7 +6,8 @@ import {
     TextInput,
     Image,
     TouchableOpacity,
-    Animated
+    ViewPagerAndroid,
+    Text
 } from 'react-native';
 import {
     addExercise,
@@ -51,6 +52,10 @@ const styles = StyleSheet.create({
     separator: {
         marginVertical: 10,
     },
+    pageStyle: {
+        alignItems: 'center',
+        padding: 20,
+    }
 });
 
 
@@ -95,7 +100,7 @@ class ListViewWrapper extends Component {
     }
 
     onSetChange = (elementId, kg, index) => {
-        this.props.dispatch(addSet(elementId, {amount: kg}, index));
+        this.props.dispatch(addSet(elementId, { amount: kg }, index));
     }
 
     onMetaDataChange = (metaData, index) => {
@@ -164,4 +169,3 @@ export default connect(state => ({
     search: state.search,
     element: state.element
 }))(ListViewWrapper);
-    // exercises: fixture,

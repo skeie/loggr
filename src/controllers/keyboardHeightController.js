@@ -19,9 +19,7 @@ class KeyboardController extends React.Component {
     }
 
     updateKeyboardSpace = (e) => {
-        console.log('yolo 1337');
         const newSize = Dimensions.get('window').height - e.endCoordinates.height;
-        console.log(newSize, this.newSize, '1340');
         if (this.newSize != newSize) {
             this.newSize = newSize;
             this.props.dispatch(keyboardHeightChange(newSize));
