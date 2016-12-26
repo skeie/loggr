@@ -75,11 +75,8 @@ class Elements extends Component {
     }
 
     isActive = index => {
-        // const {elementIndex, currentIndex} = this.props;
-        // console.log(this.inputs, 'sap')
-        // if(currentIndex.get('elementIndex') === elementIndex && index === currentIndex.get('setIndex')) {
-        //     this.inputs[index].focus();
-        // } 
+         const {elementIndex, currentIndex} = this.props;
+         return currentIndex.get('elementIndex') === elementIndex && index === currentIndex.get('setIndex');
     }
 
     onLongPress = () => {
@@ -110,6 +107,7 @@ class Elements extends Component {
                                 onSubmitEditing={this.onBlur}
                                 keyboardType='phone-pad'
                                 style={styles.textInput}
+                                isActice={this.isActive(i)}
                                 />
                         ))}
                     </View>
