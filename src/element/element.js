@@ -60,7 +60,7 @@ class Elements extends Component {
             const { element } = this.props;
             const elementId = element.getIn(['sets', index, 'id']);
             this.props.onSetChange(elementId, this.kg, index);
-            setTimeout(() => { this.onPress(index + 1); })
+            //setTimeout(() => { this.onPress(index + 1); })
 
         }
 
@@ -75,17 +75,20 @@ class Elements extends Component {
     }
 
     isActive = index => {
-         const {elementIndex, currentIndex} = this.props;
-         return currentIndex.get('elementIndex') === elementIndex && index === currentIndex.get('setIndex');
+        const {elementIndex, currentIndex} = this.props;
+        return currentIndex.get('elementIndex') === elementIndex && index === currentIndex.get('setIndex');
     }
 
     onLongPress = () => {
         this.props.dispatch(toggleModal(this.props.elementIndex));
     }
 
+    getValue = (set) => {
+        return set.get('amount') ? { value: set.get('amount') } : {}
+    }
+
     render() {
         const {onMetaDataChange, onSetChange, element, currentIndex} = this.props;
-
         return (
             <TouchableWithoutFeedback onLongPress={this.onLongPress}>
                 <View style={styles.container}>
@@ -97,7 +100,6 @@ class Elements extends Component {
                         {element.get('sets').map((set, i) => (
                             <TextInput
                                 setRef={ref => this.inputs[i] = ref}
-                                text={set.get('amount')}
                                 placeholder={set.get('amount')}
                                 onPress={this.onPress}
                                 index={i}
@@ -108,6 +110,7 @@ class Elements extends Component {
                                 keyboardType='phone-pad'
                                 style={styles.textInput}
                                 isActice={this.isActive(i)}
+                                {...this.getValue(set) }
                                 />
                         ))}
                     </View>

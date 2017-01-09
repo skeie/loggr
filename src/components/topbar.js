@@ -20,6 +20,7 @@ import dismissKeyboard from 'dismissKeyboard';
 import { primaryColor, placeholderColor, underlineActive, textColor } from '../styles'
 import { search, addBtn, cancelBtn } from '../Images';
 import { toggleCreateModal } from '../exercises/actions';
+import { INIT_STATE } from '../element/elementActions';
 
 const {width} = Dimensions.get('window');
 
@@ -40,6 +41,7 @@ class Topbar extends Component {
   }
 
   toggleSearchPress = () => {
+    this.props.dispatch(INIT_STATE())
     this.setState(({isActive}) => ({
       isActive: !isActive
     }))

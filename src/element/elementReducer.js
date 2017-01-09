@@ -22,6 +22,8 @@ export default function reducer(state = initialState, action = {}) {
                 elementIndex,
                 showMetaModal: !state.get('showMetaModal')
             });
+        case types.ELEMENT_INIT_STATE: 
+            return initialState;
 
         default:
             return state;

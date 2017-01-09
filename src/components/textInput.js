@@ -12,6 +12,15 @@ class LoggrTextInput extends Component {
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        if(this.state.text != nextProps.value) {
+            this.setState({
+                text: nextProps.value
+            });
+        }
+    }
+    
+
     static defaultProps = {
         onChangeText: NO_OP
     }
@@ -25,7 +34,6 @@ class LoggrTextInput extends Component {
 
     render() {
         const {
-            text,
             index,
             isActice,
             onPress = NO_OP,
