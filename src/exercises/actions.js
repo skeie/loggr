@@ -1,5 +1,8 @@
 import * as types from './actionTypes';
 import { post, get, del, put } from '../utils/fetch';
+const Truls = 1;
+const Bendik = 2;
+const Morten = 3;
 
 export const getAll = () => (
     {
@@ -8,7 +11,7 @@ export const getAll = () => (
             types.GET_EXERCISE_SUCCESS,
             types.GET_EXERCISE_FAIL
         ],
-        promise: () => get('/exercises'),
+        promise: () => get(`/exercises/${Morten}`),
     }
 )
 
@@ -20,7 +23,7 @@ export const addExercise = (name) => {
             types.ADD_EXERCISE_SUCCESS,
             types.ADD_EXERCISE_FAIL
         ],
-        promise: () => post('/exercises/1', exercise),
+        promise: () => post(`/exercises/${Morten}`, exercise),
         ...exercise
     }
 };
@@ -39,7 +42,7 @@ export const addSet = (elementId, element, index) => (
     }
 );
 
-export const onExerciseUpdate = (id, exercise, elementIndex) => (
+export const onExerciseUpdate = (id, exercise) => (
     {
         type: [
             types.EXERCISE_UPDATE,
@@ -49,11 +52,10 @@ export const onExerciseUpdate = (id, exercise, elementIndex) => (
         promise: () => put(`/exercises/${id}`, { exercise }),
         exercise,
         id,
-        elementIndex
     }
 );
 
-export const onDelete = (id, index) => (
+export const onDelete = (id) => (
     {
         type: [
             types.DELETE_EXERCISE,
@@ -61,25 +63,12 @@ export const onDelete = (id, index) => (
             types.DELETE_EXERCISE_FAIL
         ],
         promise: () => del(`/exercises/${id}`),
-        id,
-        index
+        id
     }
 );
 
 export const toggleCreateModal = () => (
     {
         type: types.TOGGLE_CREATE_MODAL
-    }
-)
-
-export const addNewSet = (elementIndex) => (
-    {
-        type: [
-            types.ADD_NEW_SET,
-            types.ADD_NEW_SET_SUCCESS,
-            types.ADD_NEW_SET_FAIL
-        ],
-        promise: () => post(`/${elementIndex}/element`),
-        elementIndex,
     }
 )

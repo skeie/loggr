@@ -18,7 +18,7 @@ export const textInputWidth = width - marginHorizontal * 4;
 
 
 const modalHeight = 200;
-const suggestedKeyboardWordHeigth = isAndroid() ? 100 : 0;
+const suggestedKeyboardWordHeigth = isAndroid() ? 100 : 100;
 
 const styles = StyleSheet.create({
     container: {
@@ -26,7 +26,8 @@ const styles = StyleSheet.create({
         marginHorizontal,
         backgroundColor: 'white',
         height: modalHeight,
-        borderRadius: 5
+        borderRadius: 5,
+        alignItems: 'center'
     },
     overlay: {
         flex: 1,
@@ -36,7 +37,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: 'white',
         textAlign: 'right',
-        margin: 15
+        margin: isAndroid() ? 15 : 30
     }
 });
 

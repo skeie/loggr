@@ -21,6 +21,7 @@ import { primaryColor, placeholderColor, underlineActive, textColor } from '../s
 import { search, addBtn, cancelBtn } from '../Images';
 import { toggleCreateModal } from '../exercises/actions';
 import { INIT_STATE } from '../element/elementActions';
+import { isAndroid } from '../utils/utils';
 
 const {width} = Dimensions.get('window');
 
@@ -41,7 +42,7 @@ class Topbar extends Component {
   }
 
   toggleSearchPress = () => {
-    this.props.dispatch(INIT_STATE())
+    //this.props.dispatch(INIT_STATE())
     this.setState(({isActive}) => ({
       isActive: !isActive
     }))
@@ -106,6 +107,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 56,
     paddingHorizontal: 16,
+    marginTop: isAndroid () ? 0 : 15
 
   },
   textInput: {
@@ -114,8 +116,10 @@ const styles = StyleSheet.create({
     flex: 7
   },
   iconContainer: {
-    alignItems: 'center',
-    justifyContent: 'center'
+    width: 50,
+    height: 100,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
   }
 });
 

@@ -2,27 +2,27 @@ import { fromJS, List, Record } from 'immutable';
 import * as types from './elementAcitonTypes';
 
 const initialState = fromJS({
-    elementIndex: 0,
     setIndex: 0,
-    showMetaModal: false
+    showMetaModal: false,
+    elementId: ''
 });
 
 export default function reducer(state = initialState, action = {}) {
     switch (action.type) {
         case types.INPUT_FIELD_CHANGE: {
-            const { elementIndex, setIndex } = action;
+            const { elementId, setIndex } = action;
             return state.merge({
-                elementIndex,
+                elementId,
                 setIndex
             });
         }
         case types.ELEMENT_TOGGLE_MODAL:
-            const { elementIndex } = action;
+            const { elementId } = action;
             return state.merge({
-                elementIndex,
-                showMetaModal: !state.get('showMetaModal')
+                showMetaModal: !state.get('showMetaModal'),
+                elementId
             });
-        case types.ELEMENT_INIT_STATE: 
+        case types.ELEMENT_INIT_STATE:
             return initialState;
 
         default:

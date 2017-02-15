@@ -83,20 +83,26 @@ class ListViewWrapper extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.exercises !== this.props.exercises) {
+        if (nextProps.exercises !== this.props.exercises && this.props.search.get('searchString')) {
+            this.filterNewArray(nextProps);
+        } else if (nextProps.exercises !== this.props.exercises) {
             this.setState({
                 exercises: this.ds.cloneWithRows(nextProps.exercises.get('exercises').toArray())
             });
         } if (nextProps.search !== this.props.search) {
-            const regex = new RegExp(nextProps.search.get('searchString'), 'i');
-            const filtered = nextProps.exercises.get('exercises').filter(exercise => (
-                exercise.get('name').search(regex) > -1
-            )
-            );
-            this.setState({
-                exercises: this.ds.cloneWithRows(filtered.toArray())
-            });
+            this.filterNewArray(nextProps);
         }
+    }
+
+    filterNewArray = (nextProps) => {
+        const regex = new RegExp(nextProps.search.get('searchString'), 'i');
+        const filtered = nextProps.exercises.get('exercises').filter(exercise => (
+            exercise.get('name').search(regex) > -1
+        )
+        );
+        this.setState({
+            exercises: this.ds.cloneWithRows(filtered.toArray())
+        });
     }
 
     onSetChange = (elementId, kg, index) => {

@@ -14,12 +14,13 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 20,
-        color: headerColor
+        color: headerColor,
     },
     textInput: {
         width: textInputWidth,
         color: textColor,
-        fontSize: 18
+        fontSize: 18,
+        height: 50
     }
 });
 

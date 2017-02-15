@@ -42,21 +42,23 @@ class LoggrTextInput extends Component {
             placeholderTextColor,
             onBlur = NO_OP,
             autoFocus,
-            onSubmitEditing,
+            onSubmitEditing = NO_OP,
             returnKeyType = 'done',
             keyboardType = 'default',
             onScroll = NO_OP,
             value,
-            setRef = NO_OP
+            setRef = NO_OP,
+            onFocus = NO_OP
         } = this.props;
+        console.log(onFocus)
         return (
             <TextInput
                 ref={setRef}
+                onFocus={onFocus}
                 placeholder={placeholder}
                 key={index}
                 style={[Styles.textInput, style]}
                 underlineColorAndroid={isActice ? underlineActive : underlineInActive}
-                onFocus={onPress.bind(null, index)}
                 placeholderTextColor={placeholderTextColor}
                 onBlur={() => onBlur(index)}
                 autoFocus={autoFocus}
@@ -65,8 +67,7 @@ class LoggrTextInput extends Component {
                 keyboardType={keyboardType}
                 onChangeText={this.onChangeText}
                 value={this.state.text}
-                >
-            </TextInput>
+                />
         );
     }
 }

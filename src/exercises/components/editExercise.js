@@ -17,24 +17,33 @@ import { toggleModal } from '../../element/elementActions';
 
 const newText = '';
 
+const getSelectedExercise = (element, exercises) => (
+    exercises.get('exercises').find(arrayElement => {
+        if (arrayElement.get('id') === element.get('elementId')) {
+            return arrayElement;
+        }
+    })
+);
+
+
 const defaultText = (exercises, element) => {
-    const elementIndex = element.get('elementIndex');
     const setIndex = element.get('setIndex');
-    return exercises.getIn(['exercises', elementIndex, 'sets', setIndex, 'name']);
+    const elmt = getSelectedExercise(element, exercises);
+    return elmt && elmt.getIn(['sets', setIndex, 'name']);
 }
 
-const onPress = (dispatch, exercises, element) => {
+const onPressDelete = (dispatch, exercises, element) => {
 
     const elementIndex = element.get('elementIndex');
-    const id = exercises.getIn(['exercises', elementIndex, 'id']);
-
+    const id = getSelectedExercise(element, exercises).get('id');
+    
     dispatch(onDelete(id, elementIndex));
     closeModal(dispatch);
 }
 
 const onBlur = (exercises, element, dispatch) => {
     const elementIndex = element.get('elementIndex');
-    const id = exercises.getIn(['exercises', elementIndex, 'id']);
+    const id = getSelectedExercise(element, exercises).get('id');
     dispatch(onExerciseUpdate(id, { name: newText }, elementIndex));
     closeModal(dispatch);
 }
@@ -58,7 +67,8 @@ const styles = StyleSheet.create({
     textInput: {
         width: textInputWidth,
         color: textColor,
-        fontSize: 18
+        fontSize: 18,
+        height: 50
     },
     buttonContainer: {
         flexDirection: 'row',
@@ -74,8 +84,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: errorColor,
         fontSize: 16,
-        letterSpacing: 0.5,
-        lineHeight: 14
     }
 });
 
@@ -90,7 +98,7 @@ const EditExercise = ({
             <View style={styles.buttonContainer}>
                 <Text style={styles.title}>Edit</Text>
                 <TouchableOpacity
-                    onPress={() => { onPress(dispatch, exercises, element); } }
+                    onPress={() => { onPressDelete(dispatch, exercises, element); } }
                     style={styles.deleteBtnContainer}>
                     <Text style={styles.deleteBtn}>DELETE</Text>
                 </TouchableOpacity>

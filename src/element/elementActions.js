@@ -1,15 +1,15 @@
 import { INPUT_FIELD_CHANGE, ELEMENT_TOGGLE_MODAL, ELEMENT_INIT_STATE } from './elementAcitonTypes';
 
-export const textInputChange = (elementIndex, setIndex) => ({
+export const textInputChange = (elementId, setIndex) => ({
     type: INPUT_FIELD_CHANGE,
-    elementIndex,
+    elementId,
     setIndex
 });
 
 
-export const toggleModal = (elementIndex) => ({
+export const toggleModal = (elementId) => ({
     type: ELEMENT_TOGGLE_MODAL,
-    elementIndex
+    elementId
 });
 
 export const INIT_STATE = () => ({
