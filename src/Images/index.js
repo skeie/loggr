@@ -1,5 +1,5 @@
 export const search = require("./source/search.png");
-export const addBtn = require("./source/addBtn.png");
+export const addBtn = require("./source/add.png");
 export const cancelBtn = require("./source/cancelBtn.png");
 export const addBtnBlack = require("./source/addBtnBlack.png");
 export const background = require("./source/background.png");
@@ -9,3 +9,4 @@ export const loginBtn = require("./source/loginBtn.png");
 export const bronse = require("./source/bronse.png");
 export const silver = require("./source/silver.png");
 export const gold = require("./source/gold.png");
+export const searchHulk = require('./source/searchHulk.png');

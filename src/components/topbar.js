@@ -22,9 +22,10 @@ import {
   primaryColor,
   placeholderColor,
   underlineActive,
-  textColor
+  textColor,
+  deepPurple
 } from "../styles";
-import { search, addBtn, cancelBtn } from "../Images";
+import { search, addBtn, cancelBtn, searchHulk } from "../Images";
 import { toggleCreateModal } from "../exercises/actions";
 import { INIT_STATE } from "../element/elementActions";
 import { isAndroid } from "../utils/utils";
@@ -70,19 +71,26 @@ class Topbar extends Component {
     }
   };
 
-  render() {
+  renderTextInput = () => {
     const { isActive } = this.state;
 
     const underlineColor = isActive ? underlineActive : "transparent";
     const textColor = isActive ? textColor : placeholderColor;
     const imgSrc = isActive ? cancelBtn : addBtn;
+    const searchImg = isActive ? search : searchHulk;
     return (
-      <View style={[styles.container]}>
+      <View style={{ paddingHorizontal: 16, height: 65, marginTop: 20,
+        backgroundColor: primaryColor }}>
+
         <TouchableOpacity
-          style={{flexDirection: "row", alignItems: 'center', flex: 1 }}
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
+            flex: 1
+          }}
           onPress={this.toggleSearchPress}
         >
-          <Image source={search} />
           <TextInput
             style={styles.textInput}
             onChangeText={this.onChangeText}
@@ -90,18 +98,41 @@ class Topbar extends Component {
             placeholderTextColor={placeholderColor}
             underlineColorAndroid={underlineColor}
             onFocus={this.onFocus}
+            placeholder="Search"
             placeholderTextColor={textColor}
           />
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={this.onIconPressed}
+          onPress={this.toggleSearchPress}
           activeOpacity={0}
           style={styles.iconContainer}
         >
-          <Image source={imgSrc} />
+          <Image source={cancelBtn} />
         </TouchableOpacity>
+        <Image
+          style={{ position: "absolute", bottom: 15, left: 25 }}
+          source={search}
+        />
       </View>
     );
+  };
+
+  renderJustIcons = () => (
+    <View
+      style={{ flexDirection: "row", justifyContent: "space-between", height: 65, marginTop: 20, backgroundColor: primaryColor, paddingHorizontal: 16}}
+    >
+      <TouchableOpacity style={{flex: 1}} onPress={this.toggleSearchPress}>
+        <Image source={searchHulk} />
+      </TouchableOpacity>
+      <TouchableOpacity style={{flex: 1, alignItems: 'flex-end'}} onPress={this.onIconPressed}>
+        <Image source={addBtn} />
+      </TouchableOpacity>
+    </View>
+  );
+
+  render() {
+    const { isActive } = this.state;
+    return isActive ? this.renderTextInput() : this.renderJustIcons()
   }
 }
 
@@ -110,23 +141,27 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     height: 70,
-    justifyContent: 'space-around',
+    justifyContent: "space-around",
     paddingHorizontal: 16,
     backgroundColor: primaryColor,
-    marginTop: 10
+    marginTop: 15
   },
   textInput: {
     height: 56,
     fontSize: 20,
-    flex: 7,
-    color: 'white',
-    marginLeft: 10
+    color: "white",
+    backgroundColor: deepPurple,
+    borderRadius: 25,
+    width: width - 35,
+    paddingLeft: 50,
+    fontFamily: "FredokaOne-Regular"
   },
   iconContainer: {
     width: 50,
     height: 100,
-    alignItems: "flex-end",
-    justifyContent: "center"
+    position: "absolute",
+    top: 15,
+    right: 5
   }
 });
 

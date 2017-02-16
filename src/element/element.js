@@ -14,7 +14,8 @@ import {
   exerciseName,
   underlineInActive,
   underlineActive,
-  textColor
+  textColor,
+  deepPurple
 } from "../styles";
 import TextInput from "../components/textInput";
 import { connect } from "react-redux";
@@ -121,7 +122,7 @@ class Elements extends Component {
             {element.get("sets").map((set, i) => (
               <View
                 style={{
-                  backgroundColor: "#421D42",
+                  backgroundColor: deepPurple,
                   alignItems: "center",
                   justifyContent: "space-around",
                   marginHorizontal: 10,
