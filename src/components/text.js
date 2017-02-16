@@ -15,7 +15,7 @@ class SText extends Component {
     fontFamily: "one"
   };
   render() {
-    debugger;
+
     const combineStyle = [this.props.style, styles[this.props.fontFamily]];
     return (
       <Text {...this.props} style={combineStyle}>

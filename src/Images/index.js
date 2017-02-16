@@ -10,3 +10,5 @@ export const bronse = require("./source/bronse.png");
 export const silver = require("./source/silver.png");
 export const gold = require("./source/gold.png");
 export const searchHulk = require('./source/searchHulk.png');
+export const modalImg = require('./source/modalImg.png');
+export const deleteImg = require('./source/delete.png');

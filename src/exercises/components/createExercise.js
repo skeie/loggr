@@ -1,46 +1,46 @@
-import React from 'react';
-import {
-    View,
-    Text,
-    StyleSheet
-} from 'react-native';
-import { headerColor, setColor, textColor } from '../../styles';
-import { marginHorizontal, textInputWidth } from './modal';
-import TextInput from '../../components/textInput';
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
+import { headerColor, setColor, textColor } from "../../styles";
+import { marginHorizontal, textInputWidth } from "./modal";
+import TextInput from "../../components/textInput";
 
 const styles = StyleSheet.create({
-    innerContainer: {
-        padding: marginHorizontal
-    },
-    title: {
-        fontSize: 20,
-        color: headerColor,
-    },
-    textInput: {
-        width: textInputWidth,
-        color: textColor,
-        fontSize: 18,
-        height: 50
-    }
+  innerContainer: {
+    padding: marginHorizontal,
+    backgroundColor: "#599418"
+  },
+  title: {
+    fontSize: 20,
+    color: headerColor
+  },
+  textInput: {
+    width: textInputWidth,
+    color: textColor,
+    fontSize: 26,
+    flex: 1,
+    fontFamily: "FredokaOne-Regular",
+    alignSelf: "flex-start",
+    marginLeft: 5
+  }
 });
 
-const CreateExercise = ({
+const CreateExercise = (
+  {
     onBlur,
     onChangeText
-}) => (
-        <View style={styles.innerContainer}>
-            <Text style={styles.title}>New Workout</Text>
-            <TextInput
-                onChangeText={onChangeText}
-                placeholder='Name'
-                text=''
-                isActice
-                style={styles.textInput}
-                placeholderTextColor={setColor}
-                onSubmitEditing={onBlur}
-                autoFocus
-                />
-        </View>
-    );
+  }
+) => (
+  <TextInput
+    multiline
+    onChangeText={onChangeText}
+    placeholder="Title"
+    text=""
+    isActice
+    style={styles.textInput}
+    placeholderTextColor={setColor}
+    onSubmitEditing={onBlur}
+    autoFocus
+  />
+);
 
 export default CreateExercise;
