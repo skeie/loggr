@@ -29,15 +29,16 @@ import dismissKeyboard from 'dismissKeyboard';
 import { showModal } from '../element/elementActions';
 import fixture from './fixtures/exercisesFixtures';
 import { toggleModal } from '../element/elementActions';
+import { primaryColor } from '../styles';
 const styles = StyleSheet.create({
     listview: {
         flex: 1,
         height: 200,
-        backgroundColor: '#0B2F4C'
+        backgroundColor: primaryColor
     },
     listContainer: {
         backfaceVisibility: 'hidden',
-        backgroundColor: '#0B2F4C',
+        backgroundColor: primaryColor,
         flex: 1
 
     },

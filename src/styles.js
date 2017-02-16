@@ -1,5 +1,5 @@
 export const topHeader = '#2E3AA0';
-export const primaryColor = '#0B2F4C';
+export const primaryColor = '#5A325A';
 export const greyBackground = '#EFF0F1';
 export const placeholderColor = '#FFFFFF';
 export const elementBox = '#FFFFFF';

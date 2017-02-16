@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Image, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { width } from "../utils/utils";
+import { width, height } from "../utils/utils";
 import { facebookLogin } from "./facebooklogin";
 import { login } from "../user/userAction";
 import { connect } from "react-redux";
@@ -8,13 +8,15 @@ import { hulk, loginBtn } from "../Images";
 
 const styles = StyleSheet.create({
   image: {
-    width,
-    alignItems: "center",
-    justifyContent: "flex-end",
-    flex: 1
+    flex: 1,
+    alignSelf: "stretch",
+    width: undefined,
+    height: undefined
   },
   fbBtn: {
-    marginBottom: 175
+    position: "absolute",
+    bottom: height / 4.7,
+    right: width / 3.1
   }
 });
 
@@ -32,7 +34,7 @@ class Login extends Component {
 
   render() {
     return (
-      <Image style={styles.image} source={hulk}>
+      <Image resizeMode="contain" style={styles.image} source={hulk}>
         <TouchableOpacity style={styles.fbBtn} onPress={this.onLogin}>
           <Image source={loginBtn} />
         </TouchableOpacity>

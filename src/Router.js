@@ -29,7 +29,6 @@ const Loading = () => (
 class Router extends Component {
   constructor(props) {
     super(props);
-    // StatusBar.setHidden(true);
     this.state = {
       loaded: false
     };
@@ -37,7 +36,6 @@ class Router extends Component {
 
   componentDidMount() {
     if (this.props.jwtToken) {
-      console.log('sapdap')
       setTimeout(
         () => {
           this.setState({ loaded: true });
@@ -52,15 +50,14 @@ class Router extends Component {
       setAuthorizationToken(jwtToken);
     }
   }
-
+      // if (this.state.loaded) {
+      //   return <List />;
+      // } else {
   render() {
-    return <Login />;
     if (this.props.jwtToken) {
-      if (this.state.loaded) {
-        return <List />;
-      } else {
-       return <Loading />;
-      }
+
+       return <List />;
+      
     } else {
       return <Login />;
     }

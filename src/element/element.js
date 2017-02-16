@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Modal from "../components/modal";
 import {
   StyleSheet,
-  Text,
   View,
   Dimensions,
   TouchableWithoutFeedback,
@@ -22,13 +21,11 @@ import { connect } from "react-redux";
 import { textInputChange, toggleModal } from "./elementActions";
 import { more, addBtnBlack } from "../Images";
 import { onChange } from "../search/searchActions";
+import Text from "../components/text";
+import { bronse, silver, gold } from "../Images";
 const { width, height } = Dimensions.get("window");
 
-const elements = [
-  require("./imgs/element1.png"),
-  require("./imgs/element2.png"),
-  require("./imgs/element3.png")
-];
+const elements = [bronse, silver, gold];
 class Elements extends Component {
   constructor(props) {
     super(props);
@@ -114,14 +111,26 @@ class Elements extends Component {
           </Text>
           <ScrollView
             horizontal
-            contentContainerStyle={{ flexDirection: "row" }}
+            contentContainerStyle={{
+              flex: 1,
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center"
+            }}
           >
             {element.get("sets").map((set, i) => (
-              <Image
-                style={{ alignItems: "center", justifyContent: "center" }}
-                source={`${elements[i]}`}
+              <View
+                style={{
+                  backgroundColor: "#421D42",
+                  alignItems: "center",
+                  justifyContent: "space-around",
+                  marginHorizontal: 10,
+                  flex: 1
+                }}
                 key={this.props.element.getIn(["sets", i, "id"])}
               >
+                <Text fontFamily="regular" style={styles.elementTitle}>Set {i + 1}</Text>
+                <Image source={elements[i]} />
                 <TextInput
                   onFocus={() => this.onFocus(i)}
                   setRef={ref => this.inputs[i] = ref}
@@ -137,7 +146,7 @@ class Elements extends Component {
                   isActice={this.isActive(i)}
                   {...this.getValue(set)}
                 />
-              </Image>
+              </View>
             ))}
           </ScrollView>
         </View>
@@ -152,16 +161,20 @@ const styles = StyleSheet.create({
     marginTop: 20,
     fontSize: 35,
     color: exerciseName,
-    marginLeft: 16
+    marginLeft: 16,
+    marginBottom: 15
   },
   textInput: {
     height: 50,
-    width: width / 3,
-    fontSize: 18,
-    marginTop: 70,
+    fontSize: 25,
     textAlign: "center",
-    color: "white"
+    color: "white",
+    fontFamily: "Fredoka One"
   },
+  elementTitle: {
+    fontSize: 16,
+    color: "#FFFFFF",
+  }
 });
 
 export default connect(({ element }) => ({

@@ -110,10 +110,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     height: 70,
-    marginTop: 0,
     justifyContent: 'space-around',
     paddingHorizontal: 16,
-    backgroundColor: primaryColor
+    backgroundColor: primaryColor,
+    marginTop: 10
   },
   textInput: {
     height: 56,
