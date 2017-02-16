@@ -11,7 +11,7 @@
 
 #import "RCTBundleURLProvider.h"
 #import "RCTRootView.h"
-
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -35,7 +35,7 @@
   UIView *statusBar = [[[UIApplication sharedApplication] valueForKey:@"statusBarWindow"] valueForKey:@"statusBar"];
   
   if ([statusBar respondsToSelector:@selector(setBackgroundColor:)]) {
-    statusBar.backgroundColor = [UIColor colorWithRed:46/255.0 green:58/255.0 blue:160/255.0 alpha:100];
+    statusBar.backgroundColor = [UIColor colorWithRed:90/255.0 green:50/255.0 blue:90/255.0 alpha:100];
   }
   
   
@@ -46,6 +46,19 @@
 -(void)setStatusBarBackgroundColor:(UIColor *)color {
   
  
+}
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+  [FBSDKAppEvents activateApp];
+}
+
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
+  return [[FBSDKApplicationDelegate sharedInstance] application:application
+                                                        openURL:url
+                                              sourceApplication:sourceApplication
+                                                     annotation:annotation];
 }
 
 @end

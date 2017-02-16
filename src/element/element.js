@@ -24,6 +24,11 @@ import { more, addBtnBlack } from "../Images";
 import { onChange } from "../search/searchActions";
 const { width, height } = Dimensions.get("window");
 
+const elements = [
+  require("./imgs/element1.png"),
+  require("./imgs/element2.png"),
+  require("./imgs/element3.png")
+];
 class Elements extends Component {
   constructor(props) {
     super(props);
@@ -93,33 +98,30 @@ class Elements extends Component {
   };
 
   onFocus = i => {
-      console.log('hva er amount ', this.props.element.getIn(["sets", i, "amount"]));
-      
     if (this.props.element.getIn(["sets", i, "amount"]) === "0") {
-        this.inputs[i].clear();
-    } 
+      this.inputs[i].clear();
+    }
     this.onPress(i);
-
   };
 
   render() {
     const { onMetaDataChange, onSetChange, element, currentIndex } = this.props;
     return (
       <TouchableWithoutFeedback onLongPress={this.onLongPress}>
-        <View style={styles.container}>
+        <View>
           <Text style={styles.name}>
             {element.get("name")}
           </Text>
-          <View
-            style={{
-              flexDirection: "row",
-              flex: 1,
-              justifyContent: "space-between"
-            }}
+          <ScrollView
+            horizontal
+            contentContainerStyle={{ flexDirection: "row" }}
           >
-            {element
-              .get("sets")
-              .map((set, i) => (
+            {element.get("sets").map((set, i) => (
+              <Image
+                style={{ alignItems: "center", justifyContent: "center" }}
+                source={`${elements[i]}`}
+                key={this.props.element.getIn(["sets", i, "id"])}
+              >
                 <TextInput
                   onFocus={() => this.onFocus(i)}
                   setRef={ref => this.inputs[i] = ref}
@@ -135,8 +137,9 @@ class Elements extends Component {
                   isActice={this.isActive(i)}
                   {...this.getValue(set)}
                 />
-              ))}
-          </View>
+              </Image>
+            ))}
+          </ScrollView>
         </View>
       </TouchableWithoutFeedback>
     );
@@ -147,33 +150,18 @@ const styles = StyleSheet.create({
   name: {
     alignSelf: "flex-start",
     marginTop: 20,
-    fontSize: 18,
-    color: exerciseName
+    fontSize: 35,
+    color: exerciseName,
+    marginLeft: 16
   },
   textInput: {
-    marginTop: 10,
     height: 50,
     width: width / 3,
-    fontSize: 24,
-    color: textColor
+    fontSize: 18,
+    marginTop: 70,
+    textAlign: "center",
+    color: "white"
   },
-  container: {
-    paddingLeft: 16,
-    backgroundColor: elementBox,
-    height: 104,
-    width
-  },
-  elementContainer: {
-    flex: 1
-  },
-  textBox: {
-    width,
-    marginTop: 10,
-    marginBottom: 14,
-    borderRadius: 2,
-    textAlignVertical: "top",
-    flex: 1
-  }
 });
 
 export default connect(({ element }) => ({

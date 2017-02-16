@@ -32,11 +32,12 @@ import { toggleModal } from '../element/elementActions';
 const styles = StyleSheet.create({
     listview: {
         flex: 1,
-        height: 200
+        height: 200,
+        backgroundColor: '#0B2F4C'
     },
     listContainer: {
         backfaceVisibility: 'hidden',
-        backgroundColor: greyBackground,
+        backgroundColor: '#0B2F4C',
         flex: 1
 
     },
@@ -50,7 +51,7 @@ const styles = StyleSheet.create({
         height: 40
     },
     separator: {
-        marginVertical: 10,
+        marginVertical: 0,
     },
     pageStyle: {
         alignItems: 'center',
@@ -70,7 +71,7 @@ class ListViewWrapper extends Component {
             showModal: false,
             showMetaModal: false
         }
-        props.dispatch(getAll());
+        props.dispatch(getAll(this.props.user.get('id')));
     }
 
     static propTypes = {
@@ -78,7 +79,7 @@ class ListViewWrapper extends Component {
     }
 
     onAddPress = () => {
-        this.props.dispatch(addExercise(this.text));
+        this.props.dispatch(addExercise(this.text, this.props.user.get('id')));
         dismissKeyboard();
     }
 
@@ -95,6 +96,7 @@ class ListViewWrapper extends Component {
     }
 
     filterNewArray = (nextProps) => {
+        this.ref.scrollTo({x: 0, y: 0, animated: true});
         const regex = new RegExp(nextProps.search.get('searchString'), 'i');
         const filtered = nextProps.exercises.get('exercises').filter(exercise => (
             exercise.get('name').search(regex) > -1
@@ -144,14 +146,13 @@ class ListViewWrapper extends Component {
         return (
             <View style={styles.listContainer}>
                 <ListView
+                    ref={(ref) => this.ref = ref}
                     style={styles.listview}
                     dataSource={this.state.exercises}
                     renderRow={this.renderRow}
                     initialListSize={25}
-                    renderSeparator={
-                        (sectionId, rowId) => <View key={rowId} style={styles.separator} />
-                    }
                     enableEmptySections
+                    keyboardShouldPersistTaps="handled"
                     />
                 <CreateModal
                     onChangeText={this.onChangeText}
@@ -173,5 +174,6 @@ class ListViewWrapper extends Component {
 export default connect(state => ({
     exercises: state.exercises,
     search: state.search,
-    element: state.element
+    element: state.element,
+    user: state.user
 }))(ListViewWrapper);

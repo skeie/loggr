@@ -58,7 +58,7 @@ class LoggrTextInput extends Component {
                 placeholder={placeholder}
                 key={index}
                 style={[Styles.textInput, style]}
-                underlineColorAndroid={isActice ? underlineActive : underlineInActive}
+                underlineColorAndroid="transparent"
                 placeholderTextColor={placeholderTextColor}
                 onBlur={() => onBlur(index)}
                 autoFocus={autoFocus}

@@ -1,21 +1,18 @@
 import * as types from './actionTypes';
 import { post, get, del, put } from '../utils/fetch';
-const Truls = 1;
-const Bendik = 2;
-const Morten = 3;
 
-export const getAll = () => (
+export const getAll = (id) => (
     {
         type: [
             types.GET_EXERCISE,
             types.GET_EXERCISE_SUCCESS,
             types.GET_EXERCISE_FAIL
         ],
-        promise: () => get(`/exercises/${Morten}`),
+        promise: () => get(`/exercises/${id}`),
     }
 )
 
-export const addExercise = (name) => {
+export const addExercise = (name, id) => {
     const exercise = { exercise: { name, body: '' } };
     return {
         type: [
@@ -23,7 +20,7 @@ export const addExercise = (name) => {
             types.ADD_EXERCISE_SUCCESS,
             types.ADD_EXERCISE_FAIL
         ],
-        promise: () => post(`/exercises/${Morten}`, exercise),
+        promise: () => post(`/exercises/${id}`, exercise),
         ...exercise
     }
 };

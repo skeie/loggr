@@ -44,6 +44,7 @@ export default function reducer(state = initialState, action = {}) {
         success: ''
       });
     case types.GET_EXERCISE_SUCCESS:
+    console.log(action.payload, 'sap')
       const newData = action.payload.data.map(exercise => {
         return new Exercise(fromJS(exercise));
       });
