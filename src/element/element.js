@@ -104,12 +104,18 @@ class Elements extends Component {
 
   render() {
     const { onMetaDataChange, onSetChange, element, currentIndex } = this.props;
+    const fontSize = {fontSize: element.get("name").length >= 16 ? 26 : 38}
     return (
       <TouchableWithoutFeedback onLongPress={this.onLongPress}>
         <View>
-          <Text style={styles.name}>
-            {element.get("name")}
-          </Text>
+          <View style={{ flexDirection: "row", alignItems: 'center', marginVertical: 15, justifyContent: 'space-between' }}>
+            <Text style={[styles.name, fontSize]}>
+              {element.get("name")}
+            </Text>
+            <Text onPress={this.onLongPress} style={styles.editbtn}>
+              EDIT
+            </Text>
+          </View>
           <ScrollView
             horizontal
             contentContainerStyle={{
@@ -126,11 +132,14 @@ class Elements extends Component {
                   alignItems: "center",
                   justifyContent: "space-around",
                   marginHorizontal: 10,
+                  borderRadius: 13,
                   flex: 1
                 }}
                 key={this.props.element.getIn(["sets", i, "id"])}
               >
-                <Text fontFamily="regular" style={styles.elementTitle}>Set {i + 1}</Text>
+                <Text fontFamily="regular" style={styles.elementTitle}>
+                  Set {i + 1}
+                </Text>
                 <Image source={elements[i]} />
                 <TextInput
                   onFocus={() => this.onFocus(i)}
@@ -159,11 +168,9 @@ class Elements extends Component {
 const styles = StyleSheet.create({
   name: {
     alignSelf: "flex-start",
-    marginTop: 20,
     fontSize: 35,
     color: exerciseName,
     marginLeft: 16,
-    marginBottom: 15
   },
   textInput: {
     height: 50,
@@ -173,8 +180,14 @@ const styles = StyleSheet.create({
     fontFamily: "Fredoka One"
   },
   elementTitle: {
+    marginTop: 10,
+    fontSize: 16,
+    color: "#FFFFFF"
+  },
+  editbtn: {
     fontSize: 16,
     color: "#FFFFFF",
+    marginRight: 10
   }
 });
 

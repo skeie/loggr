@@ -14,7 +14,6 @@ import Router from './Router';
 export default class App extends Component {
   constructor(props) {
     super(props);
-    // StatusBar.setHidden(true);
     this.state = {
       loaded: false
     };

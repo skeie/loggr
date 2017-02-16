@@ -11,18 +11,12 @@ import Login from "./login/login";
 import { connect } from "react-redux";
 import { setAuthorizationToken } from "./utils/fetch";
 import { background } from "./Images";
-import SpinningImg from "./components/spinningImg";
+import { primaryColor } from "./styles";
 const List = () => (
-  <View style={{ flex: 1 }}>
+  <View style={{ flex: 1, backgroundColor: primaryColor }}>
     <Topbar />
     <Exercises />
     <KeyboardHeightController />
-  </View>
-);
-
-const Loading = () => (
-  <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-    <SpinningImg />
   </View>
 );
 
@@ -50,14 +44,10 @@ class Router extends Component {
       setAuthorizationToken(jwtToken);
     }
   }
-      // if (this.state.loaded) {
-      //   return <List />;
-      // } else {
+
   render() {
     if (this.props.jwtToken) {
-
-       return <List />;
-      
+      return <List />;
     } else {
       return <Login />;
     }

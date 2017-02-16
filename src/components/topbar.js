@@ -42,6 +42,8 @@ class Topbar extends Component {
     };
   }
 
+  ref = {}
+
   onChangeText = text => {
     this.props.dispatch(onChange(text));
   };
@@ -52,6 +54,8 @@ class Topbar extends Component {
 
   toggleSearchPress = () => {
     //this.props.dispatch(INIT_STATE())
+    
+
     this.setState(({ isActive }) => ({
       isActive: !isActive
     }));
@@ -79,8 +83,14 @@ class Topbar extends Component {
     const imgSrc = isActive ? cancelBtn : addBtn;
     const searchImg = isActive ? search : searchHulk;
     return (
-      <View style={{ paddingHorizontal: 16, height: 65, marginTop: 20,
-        backgroundColor: primaryColor }}>
+      <View
+        style={{
+          paddingHorizontal: 16,
+          height: 65,
+          marginTop: 20,
+          backgroundColor: primaryColor
+        }}
+      >
 
         <TouchableOpacity
           style={{
@@ -92,18 +102,20 @@ class Topbar extends Component {
           onPress={this.toggleSearchPress}
         >
           <TextInput
+            ref={ref => console.log('sapdap')}
             style={styles.textInput}
             onChangeText={this.onChangeText}
             value={this.props.search.get("searchString")}
             placeholderTextColor={placeholderColor}
-            underlineColorAndroid={underlineColor}
+            underlineColorAndroid="transparent"
             onFocus={this.onFocus}
             placeholder="Search"
             placeholderTextColor={textColor}
+            autoFocus
           />
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={this.toggleSearchPress}
+          onPress={this.cancelPressed}
           activeOpacity={0}
           style={styles.iconContainer}
         >
@@ -113,18 +125,29 @@ class Topbar extends Component {
           style={{ position: "absolute", bottom: 15, left: 25 }}
           source={search}
         />
+
       </View>
     );
   };
 
   renderJustIcons = () => (
     <View
-      style={{ flexDirection: "row", justifyContent: "space-between", height: 65, marginTop: 20, backgroundColor: primaryColor, paddingHorizontal: 16}}
+      style={{
+        flexDirection: "row",
+        justifyContent: "space-between",
+        height: 65,
+        marginTop: 20,
+        backgroundColor: primaryColor,
+        paddingHorizontal: 16
+      }}
     >
-      <TouchableOpacity style={{flex: 1}} onPress={this.toggleSearchPress}>
+      <TouchableOpacity style={{ flex: 1 }} onPress={this.toggleSearchPress}>
         <Image source={searchHulk} />
       </TouchableOpacity>
-      <TouchableOpacity style={{flex: 1, alignItems: 'flex-end'}} onPress={this.onIconPressed}>
+      <TouchableOpacity
+        style={{ flex: 1, alignItems: "flex-end" }}
+        onPress={this.onIconPressed}
+      >
         <Image source={addBtn} />
       </TouchableOpacity>
     </View>
@@ -132,7 +155,7 @@ class Topbar extends Component {
 
   render() {
     const { isActive } = this.state;
-    return isActive ? this.renderTextInput() : this.renderJustIcons()
+    return isActive ? this.renderTextInput() : this.renderJustIcons();
   }
 }
 

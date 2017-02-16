@@ -6,7 +6,7 @@ import { headerColor, setColor, textColor } from "../../styles";
 import { isAndroid } from "../../utils/utils";
 import { connect } from "react-redux";
 import Text from "../../components/text";
-import { modalImg, deleteImg } from "../../Images";
+import { modalImg, deleteImg, overlay } from "../../Images";
 import { onDelete, onExerciseUpdate } from "../actions";
 import { toggleModal } from "../../element/elementActions";
 export const marginHorizontal = 28;
@@ -42,7 +42,8 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 34,
     color: "#FFFFFF",
-    marginBottom: 10
+    marginBottom: 10,
+    textAlign: 'center'
   }
 });
 
@@ -84,7 +85,10 @@ class LoggerModal extends Component {
       style={{
         flexDirection: "row",
         justifyContent: "space-between",
-        width: width - 50
+        width: width - 30,
+        alignItems: 'center',
+        paddingLeft: 30
+
       }}
     >
       <Text style={styles.title}>Edit</Text>
@@ -120,7 +124,7 @@ class LoggerModal extends Component {
         animationType="fade"
         onRequestClose={onClose}
       >
-        <View style={[styles.overlay]}>
+        <Image style={{height: undefined, width: undefined, flex: 1, alignSelf: 'stretch'}} source={overlay}>
           <Text style={styles.xBtn} onPress={onClose}>X</Text>
           {isEdit ? this.renderEditHeader() : this.renderNewWorkout(header)}
           <View style={[styles.container]}>
@@ -136,7 +140,7 @@ class LoggerModal extends Component {
               <Image source={modalImg} />
             </TouchableOpacity>
           </View>
-        </View>
+        </Image>
       </Modal>
     );
   }

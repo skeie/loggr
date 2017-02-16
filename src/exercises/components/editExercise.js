@@ -62,8 +62,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginLeft: 10,
     flex: 1,
-        fontFamily: "FredokaOne-Regular",
-
+    fontFamily: "FredokaOne-Regular"
   },
   buttonContainer: {
     flexDirection: "row",
