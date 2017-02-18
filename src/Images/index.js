@@ -5,7 +5,6 @@ export const addBtnBlack = require("./source/addBtnBlack.png");
 export const background = require("./source/background.png");
 export const loadingImg = require("./source/load.png");
 export const hulk = require("./source/hulk.png");
-export const loginBtn = require("./source/loginBtn.png");
 export const bronse = require("./source/bronse.png");
 export const silver = require("./source/silver.png");
 export const gold = require("./source/gold.png");

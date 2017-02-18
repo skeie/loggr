@@ -4,9 +4,9 @@ import {
   StyleSheet,
   View,
   Dimensions,
-  TouchableWithoutFeedback,
   Image,
-  ScrollView
+  ScrollView,
+  KeyboardAvoidingView
 } from "react-native";
 import {
   elementBox,
@@ -24,6 +24,7 @@ import { more, addBtnBlack } from "../Images";
 import { onChange } from "../search/searchActions";
 import Text from "../components/text";
 import { bronse, silver, gold } from "../Images";
+import { isAndroid } from "../utils/utils";
 const { width, height } = Dimensions.get("window");
 
 const elements = [bronse, silver, gold];
@@ -104,11 +105,18 @@ class Elements extends Component {
 
   render() {
     const { onMetaDataChange, onSetChange, element, currentIndex } = this.props;
-    const fontSize = {fontSize: element.get("name").length >= 16 ? 26 : 38}
+    const fontSize = { fontSize: element.get("name").length >= 16 ? 26 : 38 };
+    const androidWidth = isAndroid() && { width };
     return (
-      <TouchableWithoutFeedback onLongPress={this.onLongPress}>
         <View>
-          <View style={{ flexDirection: "row", alignItems: 'center', marginVertical: 15, justifyContent: 'space-between' }}>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              marginVertical: 15,
+              justifyContent: "space-between"
+            }}
+          >
             <Text style={[styles.name, fontSize]}>
               {element.get("name")}
             </Text>
@@ -152,7 +160,7 @@ class Elements extends Component {
                   onBlur={this.onBlur}
                   onSubmitEditing={this.onBlur}
                   keyboardType="phone-pad"
-                  style={styles.textInput}
+                  style={[styles.textInput, androidWidth]}
                   isActice={this.isActive(i)}
                   {...this.getValue(set)}
                 />
@@ -160,7 +168,6 @@ class Elements extends Component {
             ))}
           </ScrollView>
         </View>
-      </TouchableWithoutFeedback>
     );
   }
 }
@@ -170,7 +177,7 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     fontSize: 35,
     color: exerciseName,
-    marginLeft: 16,
+    marginLeft: 16
   },
   textInput: {
     height: 50,

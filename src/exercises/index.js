@@ -86,10 +86,15 @@ class ListViewWrapper extends Component {
     dismissKeyboard();
   };
 
+  componentDidMount() {
+    this.ref.scrollTo({ x: 0, y: 300, animated: true });
+  }
+
   componentWillReceiveProps(nextProps) {
     if (
       nextProps.exercises !== this.props.exercises &&
-        this.props.search.get("searchString")
+        this.props.search.get("searchString") ||
+        nextProps.search !== this.props.search
     ) {
       this.filterNewArray(nextProps);
     } else if (nextProps.exercises !== this.props.exercises) {
@@ -98,9 +103,6 @@ class ListViewWrapper extends Component {
           nextProps.exercises.get("exercises").toArray()
         )
       });
-    }
-    if (nextProps.search !== this.props.search) {
-      this.filterNewArray(nextProps);
     }
   }
 
@@ -134,11 +136,13 @@ class ListViewWrapper extends Component {
   onChangeText = text => this.text = text;
 
   componentDidMount() {
-      setTimeout(() => {
-          this.setState({loaded: true})
-      }, 3000);
+    setTimeout(
+      () => {
+        this.setState({ loaded: true });
+      },
+      3000
+    );
   }
-  
 
   renderRow = (element, sec, i) => {
     return (
@@ -158,10 +162,15 @@ class ListViewWrapper extends Component {
   };
 
   render() {
-    if (this.props.exercises.get("isFetching") || !this.state.loaded) {
+    if (false) {
       return (
         <View
-          style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: primaryColor }}
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: primaryColor
+          }}
         >
           <SpinningImg />
         </View>

@@ -815,6 +815,7 @@
 					"-lc++",
 				);
 				PRODUCT_NAME = loggr;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -841,6 +842,7 @@
 					"-lc++",
 				);
 				PRODUCT_NAME = loggr;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

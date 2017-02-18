@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import { Image, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { Image, Text, TouchableWithoutFeedback, StyleSheet } from "react-native";
 import { width, height } from "../utils/utils";
 import { facebookLogin } from "./facebooklogin";
 import { login } from "../user/userAction";
 import { connect } from "react-redux";
 import { hulk, loginBtn } from "../Images";
-
+import { primarColor } from '../styles';
 const styles = StyleSheet.create({
   image: {
     flex: 1,
@@ -34,11 +34,9 @@ class Login extends Component {
 
   render() {
     return (
-      <Image resizeMode="contain" style={styles.image} source={hulk}>
-        <TouchableOpacity style={styles.fbBtn} onPress={this.onLogin}>
-          <Image source={loginBtn} />
-        </TouchableOpacity>
-      </Image>
+      <TouchableWithoutFeedback style={{flex: 1, backgroundColor: primarColor}} onPress={this.onLogin}>
+        <Image resizeMode="contain" style={styles.image} source={hulk} />
+      </TouchableWithoutFeedback>
     );
   }
 }
