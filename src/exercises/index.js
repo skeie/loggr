@@ -164,7 +164,7 @@ class ListViewWrapper extends Component {
   };
 
   render() {
-    if (false) {
+    if (this.props.exercises.get("isFetching") || !this.state.loaded) {
       return (
         <View
           style={{
