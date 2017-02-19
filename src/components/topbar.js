@@ -23,7 +23,8 @@ import {
   placeholderColor,
   underlineActive,
   textColor,
-  deepPurple
+  deepPurple,
+  underlineInActive
 } from "../styles";
 import { search, addBtn, cancelBtn, searchHulk } from "../Images";
 import { toggleCreateModal } from "../exercises/actions";
@@ -76,12 +77,7 @@ class Topbar extends Component {
   };
 
   renderTextInput = () => {
-    const { isActive } = this.state;
 
-    const underlineColor = isActive ? underlineActive : "transparent";
-    const textColor = isActive ? textColor : placeholderColor;
-    const imgSrc = isActive ? cancelBtn : addBtn;
-    const searchImg = isActive ? search : searchHulk;
     return (
       <View
         style={{
@@ -102,7 +98,6 @@ class Topbar extends Component {
           onPress={this.toggleSearchPress}
         >
           <TextInput
-            ref={ref => console.log('sapdap')}
             style={styles.textInput}
             onChangeText={this.onChangeText}
             value={this.props.search.get("searchString")}
@@ -110,7 +105,7 @@ class Topbar extends Component {
             underlineColorAndroid="transparent"
             onFocus={this.onFocus}
             placeholder="Search"
-            placeholderTextColor={textColor}
+            placeholderTextColor="#5E3E5E"
             autoFocus
           />
         </TouchableOpacity>
@@ -129,6 +124,8 @@ class Topbar extends Component {
       </View>
     );
   };
+
+  
 
   renderJustIcons = () => (
     <View

@@ -4,7 +4,7 @@ import * as types from './elementAcitonTypes';
 const initialState = fromJS({
     setIndex: 0,
     showMetaModal: false,
-    elementId: ''
+    elementId: '',
 });
 
 export default function reducer(state = initialState, action = {}) {

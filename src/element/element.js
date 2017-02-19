@@ -26,12 +26,15 @@ import Text from "../components/text";
 import { bronse, silver, gold } from "../Images";
 import { isAndroid } from "../utils/utils";
 const { width, height } = Dimensions.get("window");
+import dismissKeyboard from "dismissKeyboard";
+export const elementHeight = 160;
 
 const elements = [bronse, silver, gold];
 class Elements extends Component {
   constructor(props) {
     super(props);
     this.inputs = [];
+    this.viewRef = {};
   }
 
   onPress = (index = 0) => {
@@ -65,27 +68,23 @@ class Elements extends Component {
       // setTimeout(() => { this.onPress(index + 1); })
       this.setNextActive(index + 1);
       // setTimeout(() => { this.props.dispatch(onChange('')) })
+      dismissKeyboard();
     }
   };
 
   setNextActive = index => {
     if (this.props.element.get("sets").size > index) {
+      // not a brand new exercise, try not to autocomplete
+      if (this.inputs[index].props.value !== "0") {
+        this.kg = "";
+      }
+
       this.inputs[index].focus();
     }
   };
 
-  onMetaDataChange = metaData => {
-    this.props.onMetaDataChange(metaData, this.props.elementId);
-  };
-
   onDelete = () => {
     this.props.onDelete(this.props.elementId, this.props.element.get("id"));
-  };
-
-  isActive = index => {
-    const { elementId, currentIndex } = this.props;
-    return currentIndex.get("elementId") === elementId &&
-      index === currentIndex.get("setIndex");
   };
 
   onLongPress = () => {
@@ -103,71 +102,81 @@ class Elements extends Component {
     this.onPress(i);
   };
 
+  onLayout = sap => {
+    if (this.props.elementIndex === 0) {
+      console.log(this.props.elementIndex, "setting", Dimensions.get("window"));
+      //this.props.onLayout(height);
+    }
+  };
+
   render() {
-    const { onMetaDataChange, onSetChange, element, currentIndex } = this.props;
+    const { onSetChange, element, currentIndex, listviewRef } = this.props;
     const fontSize = { fontSize: element.get("name").length >= 16 ? 26 : 38 };
     const androidWidth = isAndroid() && { width };
+    console.log(listviewRef);
     return (
-        <View>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              marginVertical: 15,
-              justifyContent: "space-between"
-            }}
-          >
-            <Text style={[styles.name, fontSize]}>
-              {element.get("name")}
-            </Text>
-            <Text onPress={this.onLongPress} style={styles.editbtn}>
-              EDIT
-            </Text>
-          </View>
-          <ScrollView
-            horizontal
-            contentContainerStyle={{
-              flex: 1,
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center"
-            }}
-          >
-            {element.get("sets").map((set, i) => (
-              <View
-                style={{
-                  backgroundColor: deepPurple,
-                  alignItems: "center",
-                  justifyContent: "space-around",
-                  marginHorizontal: 10,
-                  borderRadius: 13,
-                  flex: 1
-                }}
-                key={this.props.element.getIn(["sets", i, "id"])}
-              >
-                <Text fontFamily="regular" style={styles.elementTitle}>
-                  Set {i + 1}
-                </Text>
-                <Image source={elements[i]} />
-                <TextInput
-                  onFocus={() => this.onFocus(i)}
-                  setRef={ref => this.inputs[i] = ref}
-                  placeholder={set.get("amount")}
-                  onPress={this.onPress}
-                  index={i}
-                  key={i}
-                  onChangeText={kg => this.kg = kg}
-                  onBlur={this.onBlur}
-                  onSubmitEditing={this.onBlur}
-                  keyboardType="phone-pad"
-                  style={[styles.textInput, androidWidth]}
-                  isActice={this.isActive(i)}
-                  {...this.getValue(set)}
-                />
-              </View>
-            ))}
-          </ScrollView>
+      <View>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            marginVertical: 15,
+            justifyContent: "space-between"
+          }}
+        >
+          <Text style={[styles.name, fontSize]}>
+            {element.get("name")}
+          </Text>
+          <Text onPress={this.onLongPress} style={styles.editbtn}>
+            EDIT
+          </Text>
         </View>
+        <ScrollView
+          keyboardShouldPersistTaps="handled"
+          horizontal
+          contentContainerStyle={{
+            flex: 1,
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center"
+          }}
+        >
+          {element.get("sets").map((set, i) => (
+            <View
+              style={{
+                backgroundColor: deepPurple,
+                alignItems: "center",
+                justifyContent: "space-around",
+                marginHorizontal: 10,
+                borderRadius: 13,
+                flex: 1,
+                height: elementHeight
+              }}
+              key={this.props.element.getIn(["sets", i, "id"])}
+            >
+              <Text fontFamily="regular" style={styles.elementTitle}>
+                Set {i + 1}
+              </Text>
+              <Image source={elements[i]} />
+              <TextInput
+                onFocus={() => this.onFocus(i)}
+                setRef={ref => this.inputs[i] = ref}
+                placeholder={set.get("amount")}
+                onPress={this.onPress}
+                index={i}
+                key={i}
+                onChangeText={kg => this.kg = kg}
+                onBlur={this.onBlur}
+                onSubmitEditing={this.onBlur}
+                keyboardType="phone-pad"
+                style={[styles.textInput, androidWidth]}
+                returnKeyType="google"
+                {...this.getValue(set)}
+              />
+            </View>
+          ))}
+        </ScrollView>
+      </View>
     );
   }
 }
