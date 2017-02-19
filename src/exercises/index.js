@@ -100,14 +100,6 @@ class ListViewWrapper extends Component {
         )
       });
     }
-    const newElementId = nextProps.element.get("elementId");
-    if (this.props.element.get("elementId") !== newElementId) {
-        const elementIndex = nextProps.exercises.get("exercises").findIndex(el => el.get("id") === newElementId);
-        this.ref.scrollTo({ x: 0, y: elementIndex * 180, animated: true });
-        console.log('kommer du hit?', elementIndex);
-        
-    }
-    // debugger;
   }
 
   filterNewArray = nextProps => {
@@ -148,6 +140,11 @@ class ListViewWrapper extends Component {
     );
   }
 
+  scrollTo = y =>
+    this.ref.scrollTo
+      ? this.ref.scrollTo({ x: 0, y, animated: true })
+      : () => {};
+
   renderRow = (element, sec, i) => {
     return (
       <Element
@@ -157,7 +154,7 @@ class ListViewWrapper extends Component {
         onMetaDataChange={this.onMetaDataChange}
         onSetChange={this.onSetChange}
         onDelete={this.onDelete}
-        listviewRef={this.ref}
+        scrollTo={this.scrollTo}
       />
     );
   };

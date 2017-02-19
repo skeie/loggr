@@ -96,26 +96,26 @@ class Elements extends Component {
   };
 
   onFocus = i => {
+    this.props.scrollTo(this.y);
     if (this.props.element.getIn(["sets", i, "amount"]) === "0") {
       this.inputs[i].clear();
     }
     this.onPress(i);
   };
 
-  onLayout = sap => {
-    if (this.props.elementIndex === 0) {
-      console.log(this.props.elementIndex, "setting", Dimensions.get("window"));
-      //this.props.onLayout(height);
-    }
+  onLayout = event => {
+    this.y = event.nativeEvent.layout.y;
+    console.log('this.y', this.y);
+    
   };
 
   render() {
-    const { onSetChange, element, currentIndex, listviewRef } = this.props;
+    const { onSetChange, element, currentIndex, getScrollTo } = this.props;
     const fontSize = { fontSize: element.get("name").length >= 16 ? 26 : 38 };
     const androidWidth = isAndroid() && { width };
-    console.log(listviewRef);
+    
     return (
-      <View>
+      <View onLayout={this.onLayout}>
         <View
           style={{
             flexDirection: "row",
