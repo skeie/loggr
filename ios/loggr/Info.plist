@@ -61,7 +61,7 @@
 	<string></string>
 	<key>UIAppFonts</key>
 	<array>
-		<string>FredokaOne-Regular.ttf</string>
+		<string>fredok_one_regular.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

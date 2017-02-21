@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import { Text, StyleSheet } from "react-native";
+import { isAndroid } from '../utils/utils';
 
-const styles = StyleSheet.create({
+
+export const textStyle = StyleSheet.create({
   one: {
-    fontFamily: "Fredoka One",
+    fontFamily: isAndroid() ? "FredokaOne" : "Fredoka One",
     color:  'white'
   },
   regular: {
-    fontFamily: "FredokaOne-Regular",
+    fontFamily: isAndroid() ? "FredokaOne_Regular" : "FredokaOne-Regular",
     color: 'white'
   }
 });
@@ -18,7 +20,7 @@ class SText extends Component {
   };
   render() {
 
-    const combineStyle = [this.props.style, styles[this.props.fontFamily]];
+    const combineStyle = [this.props.style, textStyle[this.props.fontFamily]];
     return (
       <Text {...this.props} style={combineStyle}>
         {this.props.children}

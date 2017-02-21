@@ -27,7 +27,7 @@ import { isAndroid } from "../utils/utils";
 const { width, height } = Dimensions.get("window");
 import dismissKeyboard from "dismissKeyboard";
 import differenceBy from "lodash/differenceBy";
-
+import { textStyle } from '../components/text';
 const elements = [bronse, silver, gold];
 class Elements extends Component {
   constructor(props) {
@@ -206,7 +206,7 @@ class Elements extends Component {
                   onBlur={this.onBlur}
                   onSubmitEditing={this.onBlur}
                   keyboardType="phone-pad"
-                  style={[styles.textInput, androidWidth]}
+                  style={[styles.textInput, androidWidth, textStyle.regular]}
                   returnKeyType="google"
                   {...this.getValue(set)}
                 />
@@ -231,7 +231,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     textAlign: "center",
     color: "white",
-    fontFamily: "Fredoka One"
+    fontFamily: "FredokaOne_Regular"
   },
   elementTitle: {
     marginTop: 10,
