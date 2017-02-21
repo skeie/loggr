@@ -3,10 +3,12 @@ import { Text, StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   one: {
-    fontFamily: "Fredoka One"
+    fontFamily: "Fredoka One",
+    color:  'white'
   },
   regular: {
-    fontFamily: "FredokaOne-Regular"
+    fontFamily: "FredokaOne-Regular",
+    color: 'white'
   }
 });
 

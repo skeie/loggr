@@ -31,7 +31,6 @@ import fixture from "./fixtures/exercisesFixtures";
 import { toggleModal } from "../element/elementActions";
 import { primaryColor } from "../styles";
 import SpinningImg from "../components/spinningImg";
-
 const styles = StyleSheet.create({
   listview: {
     flex: 1,
@@ -90,7 +89,7 @@ class ListViewWrapper extends Component {
     if (
       nextProps.exercises !== this.props.exercises &&
         this.props.search.get("searchString") ||
-        nextProps.search !== this.props.search
+      nextProps.search !== this.props.search
     ) {
       this.filterNewArray(nextProps);
     } else if (nextProps.exercises !== this.props.exercises) {
@@ -136,7 +135,7 @@ class ListViewWrapper extends Component {
       () => {
         this.setState({ loaded: true });
       },
-      3000
+      4000
     );
   }
 
@@ -165,6 +164,7 @@ class ListViewWrapper extends Component {
 
   render() {
     if (this.props.exercises.get("isFetching") || !this.state.loaded) {
+      //  if(false) {
       return (
         <View
           style={{
@@ -186,8 +186,6 @@ class ListViewWrapper extends Component {
           dataSource={this.state.exercises}
           renderRow={this.renderRow}
           initialListSize={25}
-          enableEmptySections
-          keyboardShouldPersistTaps="handled"
         />
         <CreateModal
           onChangeText={this.onChangeText}

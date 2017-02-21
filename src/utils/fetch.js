@@ -55,7 +55,6 @@ export async function get(url, obj = {}) {
 }
 
 export async function post(url, obj) {
-  console.log("sap url", _appUrl(url));
 
   const response = await fetch(
     _appUrl(url),
@@ -97,7 +96,6 @@ export async function del(url, obj) {
 }
 
 export async function put(url, obj) {
-  console.log("sap url", _appUrl(url));
 
   const response = await fetch(
     _appUrl(url),

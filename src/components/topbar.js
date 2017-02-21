@@ -7,7 +7,6 @@
 import React, { Component } from "react";
 import {
   StyleSheet,
-  Text,
   View,
   Dimensions,
   TextInput,
@@ -30,8 +29,19 @@ import { search, addBtn, cancelBtn, searchHulk } from "../Images";
 import { toggleCreateModal } from "../exercises/actions";
 import { INIT_STATE } from "../element/elementActions";
 import { isAndroid } from "../utils/utils";
+import Text from "../components/text";
 
 const { width } = Dimensions.get("window");
+
+const HideKeyboard = ({ controll }) => {
+  return controll.get("keyboardHeight")
+    ? <TouchableOpacity style={styles.hideKeyboard} onPress={dismissKeyboard}>
+        <Text>
+          Done
+        </Text>
+      </TouchableOpacity>
+    : <View />;
+};
 
 class Topbar extends Component {
   constructor(props) {
@@ -43,7 +53,7 @@ class Topbar extends Component {
     };
   }
 
-  ref = {}
+  ref = {};
 
   onChangeText = text => {
     this.props.dispatch(onChange(text));
@@ -55,7 +65,6 @@ class Topbar extends Component {
 
   toggleSearchPress = () => {
     //this.props.dispatch(INIT_STATE())
-    
 
     this.setState(({ isActive }) => ({
       isActive: !isActive
@@ -77,13 +86,12 @@ class Topbar extends Component {
   };
 
   renderTextInput = () => {
-
     return (
       <View
         style={{
           paddingHorizontal: 16,
           height: 65,
-          marginTop: 20,
+          marginTop: isAndroid() ? 10 : 20,
           backgroundColor: primaryColor
         }}
       >
@@ -125,24 +133,39 @@ class Topbar extends Component {
     );
   };
 
-  
-
   renderJustIcons = () => (
     <View
       style={{
-        flexDirection: "row",
-        justifyContent: "space-between",
-        height: 65,
-        marginTop: 20,
         backgroundColor: primaryColor,
-        paddingHorizontal: 16
+        justifyContent: "space-around",
+        flexDirection: "row",
+        alignItems: "center",
+        width,
+        height: 65,
+        marginTop: isAndroid() ? 10 : 20
       }}
     >
-      <TouchableOpacity style={{ flex: 1 }} onPress={this.toggleSearchPress}>
+      <TouchableOpacity
+        style={{
+          position: "absolute",
+          left: 10,
+          top: 0,
+          bottom: 0,
+          alignItems: "center"
+        }}
+        onPress={this.toggleSearchPress}
+      >
         <Image source={searchHulk} />
       </TouchableOpacity>
+      <HideKeyboard controll={this.props.controll} />
       <TouchableOpacity
-        style={{ flex: 1, alignItems: "flex-end" }}
+        style={{
+          position: "absolute",
+          alignItems: "center",
+          right: 10,
+          top: 0,
+          bottom: 0
+        }}
         onPress={this.onIconPressed}
       >
         <Image source={addBtn} />
@@ -157,6 +180,12 @@ class Topbar extends Component {
 }
 
 const styles = StyleSheet.create({
+  hideKeyboard: {
+    backgroundColor: "#6DCF00",
+    borderRadius: 200,
+    paddingHorizontal: 20,
+    paddingVertical: 10
+  },
   container: {
     flexDirection: "row",
     alignItems: "center",
@@ -185,6 +214,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default connect(({ search }) => ({
-  search
+export default connect(({ search, controll }) => ({
+  search,
+  controll
 }))(Topbar);

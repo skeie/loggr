@@ -44,7 +44,6 @@ export default function reducer(state = initialState, action = {}) {
         success: ''
       });
     case types.GET_EXERCISE_SUCCESS:
-    console.log(action.payload, 'sap')
       const newData = action.payload.data.map(exercise => {
         return new Exercise(fromJS(exercise));
       });
@@ -58,7 +57,6 @@ export default function reducer(state = initialState, action = {}) {
       });
     case types.EXERCISE_UPDATE_SUCCESS: {
       const index = state.get('exercises').findIndex(element => element.get('id') === action.id);
-      console.log(index, action.id, '1337 når jeg legger til');
       return state.setIn(['exercises', index], new Exercise(fromJS(action.payload)));
     }
     case types.TOGGLE_CREATE_MODAL:

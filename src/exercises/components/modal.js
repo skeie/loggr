@@ -13,7 +13,7 @@ export const marginHorizontal = 28;
 export const textInputWidth = width - marginHorizontal * 4;
 
 const modalHeight = 200;
-const suggestedKeyboardWordHeigth = isAndroid() ? 100 : 100;
+const suggestedKeyboardWordHeigth = isAndroid() ? 0 : 100;
 
 const styles = StyleSheet.create({
   container: {
@@ -21,10 +21,12 @@ const styles = StyleSheet.create({
     marginHorizontal,
     backgroundColor: "#599418",
     height: 200,
-    borderRadius: 5,
+    borderRadius: 20,
     alignItems: "center",
     borderWidth: 10,
-    borderColor: "#A0FF38"
+    borderColor: "#A0FF38",
+    marginBottom: 50,
+    paddingBottom: 50
   },
   overlay: {
     flex: 1,
@@ -43,17 +45,34 @@ const styles = StyleSheet.create({
     fontSize: 34,
     color: "#FFFFFF",
     marginBottom: 10,
-    textAlign: 'center'
+    textAlign: "center"
+  },
+  doneIcon: {
+    position: "absolute",
+    bottom: isAndroid() ? -5 : -20,
+    left: width / 3.1
+  },
+  imageContainer: {
+    height: undefined,
+    width: undefined,
+    flex: 1,
+    alignSelf: "stretch"
+  },
+  editContainer: {
+    flexDirection: "row",
+    width: width - 30,
+    justifyContent: "space-between",
+    paddingLeft: 30,
+    alignItems: "center"
   }
 });
 
- const getSelectedExercise = (element, exercises) => (
-    exercises.get('exercises').find(arrayElement => {
-        if (arrayElement.get('id') === element.get('elementId')) {
-            return arrayElement;
-        }
-    })
-);
+const getSelectedExercise = (element, exercises) =>
+  exercises.get("exercises").find(arrayElement => {
+    if (arrayElement.get("id") === element.get("elementId")) {
+      return arrayElement;
+    }
+  });
 
 class LoggerModal extends Component {
   constructor(props) {
@@ -65,7 +84,6 @@ class LoggerModal extends Component {
       controll.get("keyboardHeight") !=
         this.props.controll.get("keyboardHeight");
   }
-  
 
   renderNewWorkout = header => <Text style={styles.title}>{header}</Text>;
 
@@ -81,16 +99,7 @@ class LoggerModal extends Component {
   };
 
   renderEditHeader = () => (
-    <View
-      style={{
-        flexDirection: "row",
-        justifyContent: "space-between",
-        width: width - 30,
-        alignItems: 'center',
-        paddingLeft: 30
-
-      }}
-    >
+    <View style={styles.editContainer}>
       <Text style={styles.title}>Edit</Text>
       <TouchableOpacity onPress={this.onPressDelete}>
         <Image source={deleteImg} />
@@ -124,21 +133,14 @@ class LoggerModal extends Component {
         animationType="fade"
         onRequestClose={onClose}
       >
-        <Image style={{height: undefined, width: undefined, flex: 1, alignSelf: 'stretch'}} source={overlay}>
+        <Image style={styles.imageContainer} source={overlay}>
           <Text style={styles.xBtn} onPress={onClose}>X</Text>
           {isEdit ? this.renderEditHeader() : this.renderNewWorkout(header)}
-          <View style={[styles.container]}>
-            {children}
-            <TouchableOpacity
-              style={{
-                position: "absolute",
-                right: width / 3.1,
-                bottom: -30
-              }}
-              onPress={onBlur}
-            >
+          <View style={styles.container}>
+            <TouchableOpacity style={styles.doneIcon} onPress={onBlur}>
               <Image source={modalImg} />
             </TouchableOpacity>
+            {children}
           </View>
         </Image>
       </Modal>

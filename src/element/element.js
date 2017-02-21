@@ -6,7 +6,6 @@ import {
   Dimensions,
   Image,
   ScrollView,
-  KeyboardAvoidingView
 } from "react-native";
 import {
   elementBox,
@@ -23,16 +22,19 @@ import { textInputChange, toggleModal } from "./elementActions";
 import { more, addBtnBlack } from "../Images";
 import { onChange } from "../search/searchActions";
 import Text from "../components/text";
-import { bronse, silver, gold } from "../Images";
+import { bronse, silver, gold, checked } from "../Images";
 import { isAndroid } from "../utils/utils";
 const { width, height } = Dimensions.get("window");
 import dismissKeyboard from "dismissKeyboard";
-export const elementHeight = 160;
+import differenceBy from "lodash/differenceBy";
 
 const elements = [bronse, silver, gold];
 class Elements extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      differenceId: ""
+    };
     this.inputs = [];
     this.viewRef = {};
   }
@@ -44,20 +46,50 @@ class Elements extends Component {
     }
   };
 
-  // shouldComponentUpdate({currentIndex, element}) {
-  //     return currentIndex.get('elementId') === this.props.id ||
-  //         this.props.elementId === this.props.currentIndex.get('elementId') || this.props.element !== element;
-  // }
+  //  shouldComponentUpdate({currentIndex}, {differenceId}) {
+  //      return currentIndex !== this.props.currentIndex || this.props.differenceId !== differenceId
+  //  }
 
-  shouldSetAutoFocus = currentIndex =>
-    currentIndex.get("elementId") === this.props.id &&
-      currentIndex.get("setIndex") != this.props.currentIndex.get("setIndex");
+  // shouldSetAutoFocus = currentIndex =>
+  //   currentIndex.get("elementId") === this.props.id &&
+  //     currentIndex.get("setIndex") != this.props.currentIndex.get("setIndex");
 
-  componentWillReceiveProps({ currentIndex }) {
-    if (this.shouldSetAutoFocus(currentIndex)) {
-      // this.inputs[currentIndex.get('setIndex')].focus();
+  componentWillReceiveProps({ element }) {
+    // means that an element has been modified and saved in backend,
+    // show feedback
+    if (element !== this.props.element) {
+      const that = this;
+      const difference = differenceBy(
+        element.get("sets").toJS(),
+        this.props.element.get("sets").toJS(),
+        "amount"
+      )[0];
+      if (Boolean(difference)) {
+        debugger;
+
+        this.timeout = this.setState(
+          { differenceId: difference.id },
+          this.onSaveSuccess
+        );
+      }
+      // const changed = differenceBy(element, this.props.element)
     }
+    // if (this.shouldSetAutoFocus(currentIndex)) {
+    // this.inputs[currentIndex.get('setIndex')].focus();
+    // }
   }
+
+  onSaveSuccess = () => {
+    clearTimeout(this.currentTimeout);
+    this.currentTimeout = setTimeout(
+      () => {
+        this.setState({
+          differenceId: ""
+        });
+      },
+      2000
+    );
+  };
 
   onBlur = index => {
     if (this.kg && this.props.currentIndex.get("elementId") === this.props.id) {
@@ -96,7 +128,7 @@ class Elements extends Component {
   };
 
   onFocus = i => {
-    this.props.scrollTo(this.y);
+    !isAndroid() &&  this.props.scrollTo(this.y - 180);
     if (this.props.element.getIn(["sets", i, "amount"]) === "0") {
       this.inputs[i].clear();
     }
@@ -105,15 +137,13 @@ class Elements extends Component {
 
   onLayout = event => {
     this.y = event.nativeEvent.layout.y;
-    console.log('this.y', this.y);
-    
   };
 
   render() {
     const { onSetChange, element, currentIndex, getScrollTo } = this.props;
     const fontSize = { fontSize: element.get("name").length >= 16 ? 26 : 38 };
     const androidWidth = isAndroid() && { width };
-    
+
     return (
       <View onLayout={this.onLayout}>
         <View
@@ -141,40 +171,48 @@ class Elements extends Component {
             alignItems: "center"
           }}
         >
-          {element.get("sets").map((set, i) => (
-            <View
-              style={{
-                backgroundColor: deepPurple,
-                alignItems: "center",
-                justifyContent: "space-around",
-                marginHorizontal: 10,
-                borderRadius: 13,
-                flex: 1,
-                height: elementHeight
-              }}
-              key={this.props.element.getIn(["sets", i, "id"])}
-            >
-              <Text fontFamily="regular" style={styles.elementTitle}>
-                Set {i + 1}
-              </Text>
-              <Image source={elements[i]} />
-              <TextInput
-                onFocus={() => this.onFocus(i)}
-                setRef={ref => this.inputs[i] = ref}
-                placeholder={set.get("amount")}
-                onPress={this.onPress}
-                index={i}
-                key={i}
-                onChangeText={kg => this.kg = kg}
-                onBlur={this.onBlur}
-                onSubmitEditing={this.onBlur}
-                keyboardType="phone-pad"
-                style={[styles.textInput, androidWidth]}
-                returnKeyType="google"
-                {...this.getValue(set)}
-              />
-            </View>
-          ))}
+          {element.get("sets").map((set, i) => {
+            return (
+              <View
+                style={{
+                  backgroundColor: deepPurple,
+                  alignItems: "center",
+                  justifyContent: "space-around",
+                  marginHorizontal: 10,
+                  borderRadius: 13,
+                  flex: 1,
+                  height: 180
+                }}
+                key={set.get("id")}
+              >
+                <Text fontFamily="regular" style={styles.elementTitle}>
+                  Set {i + 1}
+                </Text>
+                <Image
+                  source={
+                    set.get("id") === this.state.differenceId
+                      ? checked
+                      : elements[i]
+                  }
+                />
+                <TextInput
+                  onFocus={() => this.onFocus(i)}
+                  setRef={ref => this.inputs[i] = ref}
+                  placeholder={set.get("amount")}
+                  onPress={this.onPress}
+                  index={i}
+                  key={i}
+                  onChangeText={kg => this.kg = kg}
+                  onBlur={this.onBlur}
+                  onSubmitEditing={this.onBlur}
+                  keyboardType="phone-pad"
+                  style={[styles.textInput, androidWidth]}
+                  returnKeyType="google"
+                  {...this.getValue(set)}
+                />
+              </View>
+            );
+          })}
         </ScrollView>
       </View>
     );
@@ -208,5 +246,5 @@ const styles = StyleSheet.create({
 });
 
 export default connect(({ element }) => ({
-  currentIndex: element
+  currentIndex: element,
 }))(Elements);

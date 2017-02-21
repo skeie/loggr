@@ -12,3 +12,4 @@ export const searchHulk = require('./source/searchHulk.png');
 export const modalImg = require('./source/modalImg.png');
 export const deleteImg = require('./source/delete.png');
 export const overlay = require('./source/bg.png');
+export const checked = require('./source/checked.png');

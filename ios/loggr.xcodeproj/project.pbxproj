@@ -16,7 +16,7 @@
 		07EDF1381E559D9600EB6E92 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07EDF1351E559D9600EB6E92 /* FBSDKCoreKit.framework */; };
 		07EDF1391E559D9600EB6E92 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07EDF1361E559D9600EB6E92 /* FBSDKLoginKit.framework */; };
 		07EDF13A1E559D9600EB6E92 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07EDF1371E559D9600EB6E92 /* FBSDKShareKit.framework */; };
-		07EDF1511E55A2E300EB6E92 /* FredokaOne-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 07EDF1501E55A2E300EB6E92 /* FredokaOne-Regular.ttf */; };
+		07EDF1511E55A2E300EB6E92 /* fredok_one_regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 07EDF1501E55A2E300EB6E92 /* fredok_one_regular.ttf */; };
 		07EDF1551E55D7D200EB6E92 /* appicon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 07EDF1521E55D7D200EB6E92 /* appicon@3x.png */; };
 		07EDF1561E55D7D200EB6E92 /* appicon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 07EDF1531E55D7D200EB6E92 /* appicon@2x.png */; };
 		07EDF1571E55D7D200EB6E92 /* appicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 07EDF1541E55D7D200EB6E92 /* appicon.png */; };
@@ -182,7 +182,7 @@
 		07EDF1351E559D9600EB6E92 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../../../../../FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		07EDF1361E559D9600EB6E92 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../../../../FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		07EDF1371E559D9600EB6E92 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = ../../../../../FacebookSDK/FBSDKShareKit.framework; sourceTree = "<group>"; };
-		07EDF1501E55A2E300EB6E92 /* FredokaOne-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "FredokaOne-Regular.ttf"; sourceTree = "<group>"; };
+		07EDF1501E55A2E300EB6E92 /* fredok_one_regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = fredok_one_regular.ttf; sourceTree = "<group>"; };
 		07EDF1521E55D7D200EB6E92 /* appicon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "appicon@3x.png"; sourceTree = "<group>"; };
 		07EDF1531E55D7D200EB6E92 /* appicon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "appicon@2x.png"; sourceTree = "<group>"; };
 		07EDF1541E55D7D200EB6E92 /* appicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appicon.png; sourceTree = "<group>"; };
@@ -395,7 +395,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				07EDF1501E55A2E300EB6E92 /* FredokaOne-Regular.ttf */,
+				07EDF1501E55A2E300EB6E92 /* fredok_one_regular.ttf */,
 				13B07FAE1A68108700A75B9A /* loggr */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* loggrTests */,
@@ -684,7 +684,7 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				07EDF1551E55D7D200EB6E92 /* appicon@3x.png in Resources */,
-				07EDF1511E55A2E300EB6E92 /* FredokaOne-Regular.ttf in Resources */,
+				07EDF1511E55A2E300EB6E92 /* fredok_one_regular.ttf in Resources */,
 				07EDF1571E55D7D200EB6E92 /* appicon.png in Resources */,
 				07EDF1561E55D7D200EB6E92 /* appicon@2x.png in Resources */,
 			);
