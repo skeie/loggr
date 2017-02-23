@@ -22,13 +22,15 @@ import { textInputChange, toggleModal } from "./elementActions";
 import { more, addBtnBlack } from "../Images";
 import { onChange } from "../search/searchActions";
 import Text from "../components/text";
-import { bronse, silver, gold, checked } from "../Images";
+import { bronse, silver, gold, checked, iconMapping } from "../Images";
 import { isAndroid } from "../utils/utils";
 const { width, height } = Dimensions.get("window");
 import dismissKeyboard from "dismissKeyboard";
 import differenceBy from "lodash/differenceBy";
 import { textStyle } from '../components/text';
+
 const elements = [bronse, silver, gold];
+
 class Elements extends Component {
   constructor(props) {
     super(props);
@@ -37,6 +39,8 @@ class Elements extends Component {
     };
     this.inputs = [];
     this.viewRef = {};
+    this.iconNumber = Math.floor(Math.random() * (6 - 0) + 0);
+    
   }
 
   onPress = (index = 0) => {
@@ -57,8 +61,8 @@ class Elements extends Component {
   componentWillReceiveProps({ element }) {
     // means that an element has been modified and saved in backend,
     // show feedback
-    if (element !== this.props.element) {
-      const that = this;
+      if(element.getIn(["sets", 0, 'id']) === this.props.element.getIn(["sets", 0, 'id'])
+      && element !== this.props.element) {
       const difference = differenceBy(
         element.get("sets").toJS(),
         this.props.element.get("sets").toJS(),
@@ -189,10 +193,11 @@ class Elements extends Component {
                   Set {i + 1}
                 </Text>
                 <Image
+                style={{width: 90, height: 90}}
                   source={
                     set.get("id") === this.state.differenceId
                       ? checked
-                      : elements[i]
+                      : iconMapping[this.iconNumber][i]
                   }
                 />
                 <TextInput

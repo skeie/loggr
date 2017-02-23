@@ -3,6 +3,7 @@ import { Animated, Easing, View } from "react-native";
 import { loadingImg } from "../Images";
 import quotes from "./quotes";
 import Text from "./text";
+
 class SpinningImg extends Component {
   state = {
     spinning: new Animated.Value(0)
@@ -10,7 +11,6 @@ class SpinningImg extends Component {
 
   componentDidMount() {
     this.quote = quotes[Math.floor(Math.random() * (quotes.length - 0) + 0)];
-
     this.spin();
   }
 
@@ -53,7 +53,7 @@ class SpinningImg extends Component {
         }}
       >
         <Animated.Image source={loadingImg} style={squareAnimation} />
-        <Text style={{textAlign:'center', fontSize: 20, marginTop: 10 }}>{this.quote}</Text>
+        <Text style={{ fontSize: 20, marginTop: 10 }}>{this.quote}</Text>
       </View>
     );
   }
