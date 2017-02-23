@@ -7,7 +7,8 @@ import {
   Image,
   TouchableOpacity,
   ViewPagerAndroid,
-  Text
+  Text,
+  Dimensions
 } from "react-native";
 import {
   addExercise,
@@ -31,10 +32,9 @@ import fixture from "./fixtures/exercisesFixtures";
 import { toggleModal } from "../element/elementActions";
 import { primaryColor } from "../styles";
 import SpinningImg from "../components/spinningImg";
+import Keyboard from "../components/keyboard/keyboard";
 const styles = StyleSheet.create({
   listview: {
-    flex: 1,
-    height: 200,
     backgroundColor: primaryColor
   },
   listContainer: {
@@ -70,10 +70,10 @@ class ListViewWrapper extends Component {
       exercises: this.ds.cloneWithRows(
         this.props.exercises.get("exercises").toArray()
       ),
-      text: "",
       showModal: false,
       showMetaModal: false,
-      loaded: false
+      loaded: false,
+      showKeyboard: false,
     };
     props.dispatch(getAll(this.props.user.get("id")));
   }
@@ -139,12 +139,18 @@ class ListViewWrapper extends Component {
     );
   }
 
+  toggleKeyboard = () => {
+    this.setState(({ showKeyboard }) => ({
+      showKeyboard: !showKeyboard
+    }));
+  };
+
   scrollTo = y =>
     this.ref.scrollTo
       ? this.ref.scrollTo({ x: 0, y, animated: true })
       : () => {};
 
-  renderRow = (element, sec, i) => {
+  renderRow = (element, sec, i) => {    
     return (
       <Element
         elementIndex={parseInt(i, 10)}
@@ -154,6 +160,8 @@ class ListViewWrapper extends Component {
         onSetChange={this.onSetChange}
         onDelete={this.onDelete}
         scrollTo={this.scrollTo}
+        toggleKeyboard={this.toggleKeyboard}
+        currentText={this.state.currentText}
       />
     );
   };
@@ -163,8 +171,9 @@ class ListViewWrapper extends Component {
   };
 
   render() {
-    if (this.props.exercises.get("isFetching") || !this.state.loaded) {
-      //  if(false) {
+    //if (this.props.exercises.get("isFetching") || !this.state.loaded) {
+      
+    if (false) {
       return (
         <View
           style={{
