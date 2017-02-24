@@ -125,7 +125,7 @@ class Topbar extends Component {
           <Image source={cancelBtn} />
         </TouchableOpacity>
         <Image
-          style={{ position: "absolute", bottom: 15, left: 25 }}
+          style={{ position: "absolute", top: 15, left: 25 }}
           source={search}
         />
 
@@ -209,8 +209,8 @@ const styles = StyleSheet.create({
     width: 50,
     height: 100,
     position: "absolute",
-    top: 15,
-    right: 5
+    top: 20,
+    right: 15
   }
 });
 

@@ -12,11 +12,12 @@ import { connect } from "react-redux";
 import { setAuthorizationToken } from "./utils/fetch";
 import { background } from "./Images";
 import { primaryColor } from "./styles";
+import Keyboard from './components/keyboard/keyboard';
 const List = () => (
   <View style={{ flex: 1, backgroundColor: primaryColor }}>
     <Topbar />
     <Exercises />
-    <KeyboardHeightController />
+    <Keyboard />
   </View>
 );
 

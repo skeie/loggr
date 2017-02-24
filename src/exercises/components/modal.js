@@ -11,7 +11,7 @@ import { onDelete, onExerciseUpdate } from "../actions";
 import { toggleModal } from "../../element/elementActions";
 export const marginHorizontal = 28;
 export const textInputWidth = width - marginHorizontal * 4;
-
+import { white, hulkGreen, borderGreen } from '../../styles';
 const modalHeight = 200;
 const suggestedKeyboardWordHeigth = isAndroid() ? 0 : 100;
 
@@ -19,12 +19,12 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
     marginHorizontal,
-    backgroundColor: "#599418",
+    backgroundColor: hulkGreen,
     height: 200,
     borderRadius: 20,
     alignItems: "center",
     borderWidth: 10,
-    borderColor: "#A0FF38",
+    borderColor: borderGreen,
     marginBottom: 50,
     paddingBottom: 50
   },
@@ -36,14 +36,14 @@ const styles = StyleSheet.create({
   },
   xBtn: {
     fontSize: 20,
-    color: "white",
+    color: white,
     textAlign: "right",
     margin: isAndroid() ? 15 : 30,
     alignSelf: "flex-end"
   },
   title: {
     fontSize: 34,
-    color: "#FFFFFF",
+    color: white,
     marginBottom: 10,
     textAlign: "center"
   },

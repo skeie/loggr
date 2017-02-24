@@ -11,4 +11,7 @@ export const textColor = 'white';
 export const headerColor = '#000000';
 export const errorColor = '#D50000';
 export const deepPurple= '#421D42';
+export const hulkGreen = '#599418';
+export const borderGreen = '#A0FF38'
+export const white = 'white';
 
