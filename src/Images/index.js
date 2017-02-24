@@ -14,41 +14,97 @@ export const deleteImg = require("./source/delete.png");
 export const overlay = require("./source/bg.png");
 export const checked = require("./source/checked.png");
 
-const cup = require("./source/11.png");
-const cup1 = require("./source/12.png");
-const cup2 = require("./source/13.png");
+ const potion = require("./source/Potion_Lvl1.png");
+ const potion1 = require("./source/Potion_Lvl2.png");
+ const potion2 = require("./source/Potion_Lvl3.png");
 
-const cake = require("./source/21.png");
-const cake1 = require("./source/22.png");
-const cake2 = require("./source/23.png");
+ const cake = require("./source/Cupcake_Lvl1.png");
+ const cake1 = require("./source/Cupcake_Lvl2.png");
+ const cake2 = require("./source/Cupcake_Lvl3.png");
 
-const cupcakes = require("./source/31.png");
-const cupcakes1 = require("./source/32.png");
-const cupcakes2 = require("./source/33.png");
+ const trophy = require("./source/Trophy_Lvl1.png");
+ const trophy1 = require("./source/Trophy_Lvl2.png");
+ const trophy2 = require("./source/Trophy_Lvl3.png");
 
-const bottle = require("./source/41.png");
-const bottle1 = require("./source/42.png");
-const bottle2 = require("./source/43.png");
+ const bottle = require("./source/GiftBox_Lvl1.png");
+ const bottle1 = require("./source/GiftBox_Lvl2.png");
+ const bottle2 = require("./source/GiftBox_Lvl3.png");
 
-const donuts = require("./source/51.png");
-const donuts1 = require("./source/52.png");
-const donuts2 = require("./source/53.png");
+ const donuts = require("./source/Donuts_Lvl1.png");
+ const donuts1 = require("./source/Donuts_Lvl2.png");
+ const donuts2 = require("./source/Donuts_Lvl3.png");
 
-const coins = require("./source/61.png");
-const coins1 = require("./source/62.png");
-const coins2 = require("./source/63.png");
+ const coins = require("./source/Coins_Lvl1.png");
+ const coins1 = require("./source/Coins_Lvl2.png");
+ const coins2 = require("./source/Coins_Lvl3.png");
 
-const crown = require("./source/71.png");
-const crown1 = require("./source/72.png");
-const crown2 = require("./source/73.png");
+ const crown = require("./source/Crown_Lvl1.png");
+ const crown1 = require("./source/Crown_Lvl2.png");
+ const crown2 = require("./source/Crown_Lvl3.png");
 
 export const iconMapping = {
-  0: [cup, cup1, cup2],
+  0: [potion, potion1, potion2],
   1: [cake, cake1, cake2],
-  2: [cupcakes, cupcakes1, cupcakes2],
+  2: [trophy, trophy1, trophy2],
   3: [bottle, bottle1, bottle2],
   4: [donuts, donuts1, donuts2],
   5: [coins, coins1, coins2],
   6: [crown, crown1, crown2]
 };
-// const mapping = number =>
+
+export const buttons = {
+  "0": {
+    broken: require("./source/Null_knust.png"),
+    clean: require("./source/Null.png")
+  },
+  "1": {
+    broken: require("./source/En_Knust.png"),
+    clean: require("./source/En.png")
+  },
+  "2": {
+    broken: require("./source/To_Knust.png"),
+    clean: require("./source/To.png")
+  },
+
+  "3": {
+    broken: require("./source/Tre_Knust.png"),
+    clean: require("./source/Tree.png")
+  },
+
+  "4": {
+    broken: require("./source/Fire_Knust.png"),
+    clean: require("./source/Fire.png")
+  },
+  "5": {
+    broken: require("./source/Fem_Knust.png"),
+    clean: require("./source/Fem.png")
+  },
+  "6": {
+    broken: require("./source/Seks_Knust.png"),
+    clean: require("./source/Seks.png")
+  },
+  "7": {
+    broken: require("./source/Syv_Knust.png"),
+    clean: require("./source/Syv.png")
+  },
+  "8": {
+    broken: require("./source/Åtte_Knust.png"),
+    clean: require("./source/åtte.png")
+  },
+  "9": {
+    broken: require("./source/Ni_Knust.png"),
+    clean: require("./source/Ni.png")
+  },
+  "FAIL": {
+    broken: require("./source/Fail_Knust.png"),
+    clean: require("./source/fail.png")
+  },
+  "next": {
+    broken: require("./source/Neste_Knust.png"),
+    clean: require("./source/Neste.png")
+  },
+  "KG": {
+    broken: require("./source/Kg_Knust.png"),
+    clean: require("./source/kg.png")
+  }
+};

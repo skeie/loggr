@@ -29,6 +29,7 @@ import dismissKeyboard from "dismissKeyboard";
 import differenceBy from "lodash/differenceBy";
 import { textStyle } from "../components/text";
 import { toggleKeyboard } from "../components/keyboard/keyboardActions";
+import { hulkGreen, borderGreen } from "../styles";
 const elements = [bronse, silver, gold];
 
 class Elements extends Component {
@@ -49,10 +50,10 @@ class Elements extends Component {
     }
   };
 
-  shouldComponentUpdate({ keyboard }) {
-    return keyboard.getIn(["element", "elementId"]) ===
-      this.props.element.get("id");
-  }
+  // shouldComponentUpdate({ keyboard }) {
+  //   return keyboard.getIn(["element", "elementId"]) ===
+  //     this.props.element.get("id") || this.props.keyboard.getIn(["element", "elementId"]) === this.props.element.get("id");
+  // }
 
   // shouldSetAutoFocus = currentIndex =>
   //   currentIndex.get("elementId") === this.props.id &&
@@ -89,12 +90,28 @@ class Elements extends Component {
         this.saveSet(keyboard);
       }
     }
+    this.updateNextFocus(keyboard);
   }
+
+  updateNextFocus = keyboard => {
+    const currentElementId = keyboard.get("currentElementId");
+    if (this.isCurrentElement() && Boolean(currentElementId)) {
+      const sets = this.props.element.get("sets");
+      const currentActiveId = currentElementId;
+      const currentIndex = sets.findIndex(
+        set => set.get("id") === currentActiveId
+      );
+
+      if (currentIndex !== sets.size - 1) {
+        this.updateKeyboard(sets.get(currentIndex + 1));
+      }
+    }
+  };
 
   shouldSaveSet = newKeyboard =>
     this.isCurrentElement() &&
       this.isSetChange(newKeyboard) &&
-      Boolean(this.props.keyboard.get("text"));
+      Boolean(this.props.keyboard.get("element").size);
 
   isCurrentElement = () =>
     this.props.keyboard.getIn(["element", "elementId"]) ===
@@ -154,7 +171,7 @@ class Elements extends Component {
     this.props.onDelete(this.props.elementId, this.props.element.get("id"));
   };
 
-  onLongPress = () => {
+  onEdit = () => {
     this.props.dispatch(toggleModal(this.props.id));
   };
 
@@ -165,17 +182,10 @@ class Elements extends Component {
         this.props.element.get("id") &&
       keyboard.getIn(["element", "setId"]) == set.get("id")
     ) {
-      return keyboard.get("text") ? keyboard.get("text") : set.get("amount");
+      return keyboard.get("text");
+      // return keyboard.get("text") ? keyboard.get("text") : set.get("amount");
     }
     return set.get("amount");
-  };
-
-  onFocus = i => {
-    !isAndroid() && this.props.scrollTo(this.y - 180);
-    if (this.props.element.getIn(["sets", i, "amount"]) === "0") {
-      this.inputs[i].clear();
-    }
-    this.onPress(i);
   };
 
   onLayout = event => {
@@ -184,13 +194,27 @@ class Elements extends Component {
 
   onElementPressed = set => {
     this.props.scrollTo(this.y);
+    this.updateKeyboard(set);
+  };
+
+  updateKeyboard = set => {
     this.props.dispatch(
       toggleKeyboard({
         setId: set.get("id"),
         elementId: this.props.element.get("id"),
-        value: true
+        value: true,
+        text: set.get("amount")
       })
     );
+  };
+
+  getActiveStyle = setId => {
+    return this.props.keyboard.getIn(["element", "setId"]) === setId
+      ? {
+          borderColor: borderGreen,
+          borderWidth: 5
+        }
+      : {};
   };
 
   render() {
@@ -217,7 +241,7 @@ class Elements extends Component {
           <Text style={[styles.name, fontSize]}>
             {element.get("name")}
           </Text>
-          <Text onPress={this.onLongPress} style={styles.editbtn}>
+          <Text onPress={this.onEdit} style={styles.editbtn}>
             EDIT
           </Text>
         </View>
@@ -240,7 +264,8 @@ class Elements extends Component {
                   marginHorizontal: 10,
                   borderRadius: 13,
                   flex: 1,
-                  height: 180
+                  height: 180,
+                  ...this.getActiveStyle(set.get("id"))
                 }}
                 key={set.get("id")}
               >
@@ -255,7 +280,7 @@ class Elements extends Component {
                     Set {i + 1}
                   </Text>
                   <Image
-                    style={{ width: 90, height: 90 }}
+                    style={{ width: 90, height: 90}}
                     source={
                       set.get("id") === this.state.differenceId
                         ? checked
