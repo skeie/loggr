@@ -32,12 +32,6 @@ function setHeaders(method, body, optHeader) {
 }
 
 export async function get(url, obj = {}) {
-  let constructedUrl = url;
-
-  //   if (obj.params) {
-  //     constructedUrl += `?${queryString.stringify(obj.params)}`;
-  //   }
-
   const response = await fetch(_appUrl(url), setHeaders("GET"));
 
   if (response.status === 201) return;

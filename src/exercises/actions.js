@@ -69,3 +69,10 @@ export const toggleCreateModal = () => (
         type: types.TOGGLE_CREATE_MODAL
     }
 )
+
+export const clearElement = (elementId) => (
+    {
+        type: types.CLEAR_ELEMENT,
+        elementId
+    }
+)

@@ -133,9 +133,9 @@ class Keyboard extends Component {
           <Element image="7" isNumber onPress={this.onPress} />
           <Element image="8" isNumber onPress={this.onPress} />
           <Element image="9" isNumber onPress={this.onPress} />
-          <Element image="FAIL" onPress={this.onFailPress} />
-          <Element image="0" isNumber onPress={this.onPress} />
           <Element image="KG" onPress={this.onPress} />
+          <Element image="0" isNumber onPress={this.onPress} />
+          <Element image="FAIL" onPress={this.onFailPress} />
         </View>
       : null;
   }
