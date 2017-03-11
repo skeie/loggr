@@ -38,8 +38,8 @@ export default function reducer(state = initialState, action = {}) {
                 'exercises',
                 updateElement(
                     tempExercises,
+                    action.element.amount,
                     action.elementId,
-                    action.element.amount
                 )
             );
 

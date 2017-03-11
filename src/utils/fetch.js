@@ -1,5 +1,5 @@
 const baseURl = __DEV__
-  ? "http://192.168.1.126:3000"
+  ? "http://192.168.0.103:3000"
   : "https://loggr-api.herokuapp.com";
 let authorization = "";
 

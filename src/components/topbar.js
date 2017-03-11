@@ -30,18 +30,12 @@ import { toggleCreateModal } from "../exercises/actions";
 import { INIT_STATE } from "../element/elementActions";
 import { isAndroid } from "../utils/utils";
 import Text from "../components/text";
-
+import { toggleKeyboard } from './keyboard/keyboardActions';
 const { width } = Dimensions.get("window");
 
-const HideKeyboard = ({ controll }) => {
-  return controll.get("keyboardHeight")
-    ? <TouchableOpacity style={styles.hideKeyboard} onPress={dismissKeyboard}>
-        <Text>
-          Done
-        </Text>
-      </TouchableOpacity>
-    : <View />;
-};
+const HideKeyboard = ({ removeKeyboard }) => (
+     <TouchableOpacity style={styles.hideKeyboard} onPress={removeKeyboard}/>
+)
 
 class Topbar extends Component {
   constructor(props) {
@@ -84,6 +78,10 @@ class Topbar extends Component {
       this.props.dispatch(toggleCreateModal());
     }
   };
+
+  removeKeyboard = () => {
+    this.props.dispatch(toggleKeyboard());
+  }
 
   renderTextInput = () => {
     return (
@@ -157,7 +155,7 @@ class Topbar extends Component {
       >
         <Image source={searchHulk} />
       </TouchableOpacity>
-      <HideKeyboard controll={this.props.controll} />
+      <HideKeyboard removeKeyboard={this.removeKeyboard} />
       <TouchableOpacity
         style={{
           position: "absolute",
@@ -181,9 +179,9 @@ class Topbar extends Component {
 
 const styles = StyleSheet.create({
   hideKeyboard: {
-    backgroundColor: "#6DCF00",
+
     borderRadius: 200,
-    paddingHorizontal: 20,
+    paddingHorizontal: 100,
     paddingVertical: 10
   },
   container: {

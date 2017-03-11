@@ -17,7 +17,6 @@ export default function reducer(state = initialState, action = {}) {
                 setLength = 0,
                 ...element
             } = action.data;
-            if(text === '0') text = '';
             return state.merge({
                 element,
                 showKeyboard: value,
