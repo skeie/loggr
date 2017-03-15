@@ -12,8 +12,8 @@ export const getAll = (id) => (
     }
 )
 
-export const addExercise = (name, id) => {
-    const exercise = { exercise: { name, body: '' } };
+export const addExercise = (name, id, sets) => {
+    const exercise = { exercise: { name, body: '', sets } };
     return {
         type: [
             types.ADD_EXERCISE,

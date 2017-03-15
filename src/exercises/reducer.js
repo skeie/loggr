@@ -39,7 +39,7 @@ export default function reducer(state = initialState, action = {}) {
                 updateElement(
                     tempExercises,
                     action.element.amount,
-                    action.elementId,
+                    action.elementId
                 )
             );
 

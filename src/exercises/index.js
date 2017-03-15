@@ -80,8 +80,8 @@ class ListViewWrapper extends Component {
 
   static propTypes = {};
 
-  onAddPress = () => {
-    this.props.dispatch(addExercise(this.text, this.props.user.get("id")));
+  onAddPress = (numberOfSets) => {
+    this.props.dispatch(addExercise(this.text, this.props.user.get("id"), numberOfSets));
     dismissKeyboard();
   };
 
