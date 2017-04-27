@@ -14,7 +14,7 @@ let exercise = {};
 const updateElement = (exercises, amount, id) =>
     exercises.map(exercise => exercise.update('sets', sets => sets.map(set => {
         console.log('1337', set.get('id'), id);
-        
+
         if (set.get('id') === id) {
             debugger;
 

@@ -82,9 +82,12 @@ const getSelectedExercise = (element, exercises) =>
     });
 
 class LoggerModal extends Component {
+    state = {
+        text: '1'
+    };
+
     constructor(props) {
         super(props);
-        this.text = "1";
     }
 
     shouldComponentUpdate({ showModal, controll }) {
@@ -116,11 +119,10 @@ class LoggerModal extends Component {
     );
 
     onAdd = () => {
-      console.log(this.text, 'sapdap')
         if (this.props.isEdit) {
             this.props.onBlur();
         } else {
-            this.props.onBlur(this.text)
+            this.props.onBlur(this.state.text);
         }
     };
 
@@ -152,6 +154,21 @@ class LoggerModal extends Component {
             >
                 <Image style={styles.imageContainer} source={overlay}>
                     <Text style={styles.xBtn} onPress={onClose}>X</Text>
+                    {!isEdit &&
+                        <View style={{ alignItems: 'center' }}>
+                            <TextInput
+                                value={this.state.text}
+                                onChangeText={text => this.setState({ text })}
+                                style={{
+                                    width: 75,
+                                    height: 40,
+                                    alignSelf: 'center',
+                                    color: 'white',
+                                    backgroundColor: hulkGreen
+                                }}
+                                underlineColorAndroid="transparent"
+                            />
+                        </View>}
                     {isEdit
                         ? this.renderEditHeader()
                         : this.renderNewWorkout(header)}
@@ -164,21 +181,6 @@ class LoggerModal extends Component {
                         </TouchableOpacity>
                         {children}
                     </View>
-                    {!isEdit && 
-                    <View style={{ flex: 1, alignItems: 'center' }}>
-                        <TextInput
-                            value={this.text}
-                            onChangeText={text => this.text = text}
-                            style={{
-                                width: 50,
-                                height: 30,
-                                alignSelf: 'center',
-                                color: 'white',
-                                backgroundColor: hulkGreen
-                            }}
-                        />
-                    </View>
-                    }
                 </Image>
             </Modal>
         );
